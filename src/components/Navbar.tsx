@@ -3,12 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingCart, Search, User, Heart, Menu, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useWishlist } from '../contexts/WishlistContext';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [cartCount, setCartCount] = useState(0); // Changed to 0 initially
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { wishlist } = useWishlist();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,11 +87,22 @@ const Navbar = () => {
             </motion.button>
 
             <motion.button
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              onClick={() => navigate('/wishlist')}
+              className="relative p-2 hover:bg-gray-100 rounded-full transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
               <Heart className="w-5 h-5 text-soft-black" />
+              {wishlist.length > 0 && (
+                <motion.span
+                  className="absolute -top-1 -right-1 bg-neon-pink text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                >
+                  {wishlist.length}
+                </motion.span>
+              )}
             </motion.button>
 
             <motion.button
