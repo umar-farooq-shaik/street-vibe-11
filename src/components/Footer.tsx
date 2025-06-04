@@ -1,12 +1,24 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const Footer = () => {
+  const [email, setEmail] = useState('');
+
   const footerLinks = {
     Company: ['About Us', 'Careers', 'Press', 'Blog'],
     Support: ['Help Center', 'Size Guide', 'Returns', 'Contact'],
     Legal: ['Privacy Policy', 'Terms of Service', 'Cookies', 'GDPR']
+  };
+
+  const handleSubscribe = () => {
+    if (email.trim()) {
+      // Handle subscription logic here
+      console.log('Subscribing email:', email);
+      
+      // Clear the email input
+      setEmail('');
+    }
   };
 
   return (
@@ -94,9 +106,12 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-green text-white placeholder-gray-400 sm:w-64"
               />
               <motion.button
+                onClick={handleSubscribe}
                 className="px-6 py-3 bg-gradient-neon text-white font-semibold rounded-lg hover:shadow-lg transition-all"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}

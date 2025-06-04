@@ -22,11 +22,12 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Reordered navigation items: Home, Shop, Trending, Contact
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Shop', path: '/shop' },
-    { name: 'Contact', path: '/contact' },
     { name: 'Trending', path: '/shop' },
+    { name: 'Contact', path: '/contact' },
   ];
 
   const cartCount = getTotalItems();
@@ -35,8 +36,8 @@ const Navbar = () => {
     <motion.nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-white/90 backdrop-blur-md shadow-lg' 
-          : 'bg-white/20 backdrop-blur-md'
+          ? 'bg-white/95 backdrop-blur-md shadow-lg' 
+          : 'bg-white/10 backdrop-blur-md'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -84,7 +85,7 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Right Section - Swapped order: Search, Wishlist, Profile, Cart */}
+          {/* Right Section - Reordered: Search, Wishlist, Cart, User */}
           <div className="flex items-center space-x-4">
             <motion.button
               onClick={() => navigate('/shop')}
@@ -119,17 +120,6 @@ const Navbar = () => {
             </motion.button>
 
             <motion.button
-              onClick={() => navigate('/auth')}
-              className={`p-2 rounded-full transition-colors ${
-                isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/20'
-              }`}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <User className={`w-5 h-5 ${isScrolled ? 'text-soft-black' : 'text-white'}`} />
-            </motion.button>
-
-            <motion.button
               onClick={() => navigate('/cart')}
               className={`relative p-2 rounded-full transition-colors ${
                 isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/20'
@@ -148,6 +138,17 @@ const Navbar = () => {
                   {cartCount}
                 </motion.span>
               )}
+            </motion.button>
+
+            <motion.button
+              onClick={() => navigate('/auth')}
+              className={`p-2 rounded-full transition-colors ${
+                isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/20'
+              }`}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <User className={`w-5 h-5 ${isScrolled ? 'text-soft-black' : 'text-white'}`} />
             </motion.button>
 
             {/* Mobile Menu Button */}

@@ -175,9 +175,9 @@ const Shop = () => {
     <div className="min-h-screen bg-white-smoke">
       <Navbar />
       
-      {/* Page Header */}
+      {/* Page Header - removed pt-24 to start from top */}
       <motion.div
-        className="pt-24 pb-8 bg-gradient-dark"
+        className="pt-16 pb-8 bg-gradient-dark"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
