@@ -41,14 +41,19 @@ const Shop = () => {
 
   // 100 new products with diverse categories and real fashion images
   const products = [
+    // 5 New Premium Products at the top
+    { id: 201, name: "Premium Leather Aviator Jacket", price: 299, category: "jackets", image: "https://images.unsplash.com/photo-1520975954732-35dd22299614?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 312 },
+    { id: 202, name: "Designer High-Top Sneakers", price: 249, category: "sneakers", image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 456 },
+    { id: 203, name: "Luxury Wool Peacoat", price: 389, category: "jackets", image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5d?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 289 },
+    { id: 204, name: "Limited Edition Basketball Shoes", price: 199, category: "sneakers", image: "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 523 },
+    { id: 205, name: "Designer Trench Coat", price: 349, category: "jackets", image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 267 },
+
     // Hoodies (15 products)
     { id: 1, name: "Urban Streetwear Hoodie", price: 79, category: "hoodies", image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 124 },
-    { id: 4, name: "Vintage Logo Hoodie", price: 95, category: "hoodies", image: "https://images.unsplash.com/photo-1509114397022-ed747cca3f65?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 156 },
     { id: 6, name: "Minimalist White Hoodie", price: 85, category: "hoodies", image: "https://images.unsplash.com/photo-1618677603286-0ec56cb6e1b5?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 87 },
     { id: 7, name: "Pastel Pink Hoodie", price: 92, category: "hoodies", image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 134 },
     { id: 8, name: "Neon Green Hoodie", price: 88, category: "hoodies", image: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 78 },
     { id: 9, name: "Tie-Dye Hoodie", price: 105, category: "hoodies", image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 167 },
-    { id: 10, name: "Rainbow Gradient Hoodie", price: 98, category: "hoodies", image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 145 },
     { id: 11, name: "Gothic Black Hoodie", price: 89, category: "hoodies", image: "https://images.unsplash.com/photo-1607345366928-199ea26cfe3e?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 98 },
     { id: 12, name: "Embroidered Hoodie", price: 115, category: "hoodies", image: "https://images.unsplash.com/photo-1564557287817-3785e38ec1f5?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 189 },
     { id: 13, name: "Japanese Text Hoodie", price: 94, category: "hoodies", image: "https://images.unsplash.com/photo-1516762689617-e1cffcef479d?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 76 },
@@ -77,18 +82,14 @@ const Shop = () => {
 
     // Jackets (15 products)
     { id: 37, name: "Denim Jacket Classic", price: 99, category: "jackets", image: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 156 },
-    { id: 38, name: "Windbreaker Jacket", price: 69, category: "jackets", image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5d?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 143 },
     { id: 39, name: "Fleece Zip-Up Jacket", price: 79, category: "jackets", image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 89 },
     { id: 40, name: "Military Style Jacket", price: 129, category: "jackets", image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 198 },
-    { id: 41, name: "Puffer Winter Jacket", price: 159, category: "jackets", image: "https://images.unsplash.com/photo-1544966664-7ad5ac882d5d?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 234 },
     { id: 42, name: "Leather Biker Jacket", price: 249, category: "jackets", image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 289 },
-    { id: 43, name: "Track Jacket", price: 89, category: "jackets", image: "https://images.unsplash.com/photo-1559582947-e7a6c6c2d29e?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 134 },
     { id: 44, name: "Sherpa Jacket", price: 119, category: "jackets", image: "https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 167 },
     { id: 45, name: "Corduroy Jacket", price: 109, category: "jackets", image: "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 145 },
     { id: 46, name: "Trucker Jacket", price: 89, category: "jackets", image: "https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 123 },
     { id: 47, name: "Bomber Jacket", price: 139, category: "jackets", image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 198 },
     { id: 48, name: "Rain Jacket", price: 99, category: "jackets", image: "https://images.unsplash.com/photo-1562572159-4efc207f5aff?w=500&h=500&fit=crop&crop=center", rating: 4.4, reviews: 89 },
-    { id: 49, name: "Teddy Jacket", price: 149, category: "jackets", image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 176 },
     { id: 50, name: "Utility Vest", price: 79, category: "jackets", image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 134 },
     { id: 51, name: "Blazer Jacket", price: 189, category: "jackets", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 234 },
 
@@ -97,13 +98,11 @@ const Shop = () => {
     { id: 53, name: "Skinny Fit Jeans", price: 89, category: "jeans", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 178 },
     { id: 54, name: "Ripped Distressed Jeans", price: 95, category: "jeans", image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 145 },
     { id: 55, name: "High-Waisted Jeans", price: 99, category: "jeans", image: "https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 234 },
-    { id: 56, name: "Straight Leg Jeans", price: 79, category: "jeans", image: "https://images.unsplash.com/photo-1506629905607-c52e85baa9c8?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 123 },
     { id: 57, name: "Black Cargo Pants", price: 109, category: "jeans", image: "https://images.unsplash.com/photo-1551232864-3f0890e580d9?w=500&h=500&fit=crop&crop=center", rating: 4.4, reviews: 98 },
     { id: 58, name: "Wide Leg Jeans", price: 119, category: "jeans", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 189 },
     { id: 59, name: "Flare Jeans", price: 89, category: "jeans", image: "https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 156 },
     { id: 60, name: "Vintage Washed Jeans", price: 129, category: "jeans", image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 198 },
     { id: 61, name: "Boyfriend Jeans", price: 95, category: "jeans", image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 145 },
-    { id: 62, name: "Jogger Jeans", price: 85, category: "jeans", image: "https://images.unsplash.com/photo-1506629905607-c52e85baa9c8?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 123 },
     { id: 63, name: "Acid Wash Jeans", price: 99, category: "jeans", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 167 },
     { id: 64, name: "Cropped Jeans", price: 79, category: "jeans", image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&h=500&fit=crop&crop=center", rating: 4.4, reviews: 134 },
     { id: 65, name: "Raw Denim Jeans", price: 149, category: "jeans", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 234 },
@@ -112,29 +111,24 @@ const Shop = () => {
     // Shirts (25 products)
     { id: 67, name: "Casual Button Shirt", price: 59, category: "shirts", image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 67 },
     { id: 68, name: "Premium Tech Tee", price: 45, category: "shirts", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 123 },
-    { id: 69, name: "Graphic Print T-Shirt", price: 35, category: "shirts", image: "https://images.unsplash.com/photo-1583743814966-8936f37f8e2b?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 234 },
     { id: 70, name: "Oversized T-Shirt", price: 39, category: "shirts", image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 156 },
     { id: 71, name: "Striped Long Sleeve", price: 55, category: "shirts", image: "https://images.unsplash.com/photo-1622445275576-721325763afe?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 89 },
     { id: 72, name: "Flannel Shirt", price: 75, category: "shirts", image: "https://images.unsplash.com/photo-1621184455862-c163dfb30e0f?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 198 },
     { id: 73, name: "Polo Shirt", price: 49, category: "shirts", image: "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 134 },
     { id: 74, name: "Crop Top", price: 29, category: "shirts", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 167 },
-    { id: 75, name: "Band T-Shirt", price: 42, category: "shirts", image: "https://images.unsplash.com/photo-1583743814966-8936f37f8e2b?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 189 },
     { id: 76, name: "Tie-Dye T-Shirt", price: 38, category: "shirts", image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 145 },
-    { id: 77, name: "Henley Shirt", price: 52, category: "shirts", image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 123 },
+    { id: 77, name: "Henley Shirt", price: 52, category: "shirts", image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500&h=500&fit=crop&center", rating: 4.6, reviews: 123 },
     { id: 78, name: "Tank Top", price: 25, category: "shirts", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop&crop=center", rating: 4.4, reviews: 98 },
     { id: 79, name: "Mesh T-Shirt", price: 48, category: "shirts", image: "https://images.unsplash.com/photo-1622445275576-721325763afe?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 156 },
-    { id: 80, name: "Vintage Band Tee", price: 65, category: "shirts", image: "https://images.unsplash.com/photo-1583743814966-8936f37f8e2b?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 234 },
     { id: 81, name: "Linen Shirt", price: 79, category: "shirts", image: "https://images.unsplash.com/photo-1621184455862-c163dfb30e0f?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 167 },
     { id: 82, name: "Muscle Tee", price: 32, category: "shirts", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 134 },
     { id: 83, name: "Cuban Collar Shirt", price: 68, category: "shirts", image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 189 },
     { id: 84, name: "Thermal Long Sleeve", price: 45, category: "shirts", image: "https://images.unsplash.com/photo-1622445275576-721325763afe?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 145 },
     { id: 85, name: "Turtleneck", price: 59, category: "shirts", image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 198 },
-    { id: 86, name: "Raglan Sleeve Tee", price: 36, category: "shirts", image: "https://images.unsplash.com/photo-1583743814966-8936f37f8e2b?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 123 },
     { id: 87, name: "Baseball Jersey", price: 72, category: "shirts", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 156 },
     { id: 88, name: "Sweatshirt", price: 65, category: "shirts", image: "https://images.unsplash.com/photo-1622445275576-721325763afe?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 178 },
     { id: 89, name: "V-Neck T-Shirt", price: 29, category: "shirts", image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&h=500&fit=crop&crop=center", rating: 4.4, reviews: 145 },
     { id: 90, name: "Cardigan", price: 89, category: "shirts", image: "https://images.unsplash.com/photo-1621184455862-c163dfb30e0f?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 234 },
-    { id: 91, name: "Hoodie Vest", price: 55, category: "shirts", image: "https://images.unsplash.com/photo-1583743814966-8936f37f8e2b?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 167 },
 
     // Accessories (30 products)
     { id: 92, name: "Sport Cap Essential", price: 29, category: "accessories", image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 234 },
@@ -147,7 +141,6 @@ const Shop = () => {
     { id: 99, name: "Beanie Hat", price: 25, category: "accessories", image: "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=500&h=500&fit=crop&crop=center", rating: 4.3, reviews: 145 },
     { id: 100, name: "Watch", price: 159, category: "accessories", image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 267 },
     { id: 101, name: "Cross Body Bag", price: 69, category: "accessories", image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 198 },
-    { id: 102, name: "Fingerless Gloves", price: 32, category: "accessories", image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5d?w=500&h=500&fit=crop&crop=center", rating: 4.4, reviews: 87 },
     { id: 103, name: "Fanny Pack", price: 49, category: "accessories", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 156 },
     { id: 104, name: "Choker Necklace", price: 25, category: "accessories", image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 134 },
     { id: 105, name: "Baseball Cap", price: 35, category: "accessories", image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 189 },
@@ -158,15 +151,13 @@ const Shop = () => {
     { id: 110, name: "Wallet", price: 65, category: "accessories", image: "https://images.unsplash.com/photo-1553456558-aff63285bdd1?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 234 },
     { id: 111, name: "Hair Clips", price: 22, category: "accessories", image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop&crop=center", rating: 4.4, reviews: 98 },
     { id: 112, name: "Bandana", price: 18, category: "accessories", image: "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=500&h=500&fit=crop&crop=center", rating: 4.3, reviews: 87 },
-    { id: 113, name: "Socks Set", price: 28, category: "accessories", image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5d?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 145 },
     { id: 114, name: "Bracelet", price: 35, category: "accessories", image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 156 },
     { id: 115, name: "Keychain", price: 15, category: "accessories", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&h=500&fit=crop&crop=center", rating: 4.2, reviews: 89 },
     { id: 116, name: "Hair Tie Set", price: 12, category: "accessories", image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop&crop=center", rating: 4.3, reviews: 67 },
     { id: 117, name: "Pin Collection", price: 25, category: "accessories", image: "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 123 },
     { id: 118, name: "Laptop Sleeve", price: 45, category: "accessories", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 178 },
     { id: 119, name: "Gym Bag", price: 59, category: "accessories", image: "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 189 },
-    { id: 120, name: "Travel Organizer", price: 39, category: "accessories", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 134 },
-    { id: 121, name: "Water Bottle", price: 29, category: "accessories", image: "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=500&h=500&fit=crop&crop=center", rating: 4.4, reviews: 156 }
+    { id: 120, name: "Travel Organizer", price: 39, category: "accessories", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 134 }
   ];
 
   const categories = [
