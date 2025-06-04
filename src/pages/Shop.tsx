@@ -1,23 +1,33 @@
-
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, Grid, List, Heart, ShoppingCart } from 'lucide-react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const Shop = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'all');
   const [priceRange, setPriceRange] = useState([0, 200]);
   const [sortBy, setSortBy] = useState('newest');
   const [viewMode, setViewMode] = useState('grid');
+
+  // Update category when URL params change
+  useEffect(() => {
+    const categoryFromUrl = searchParams.get('category');
+    if (categoryFromUrl) {
+      setSelectedCategory(categoryFromUrl);
+    }
+  }, [searchParams]);
 
   // Mock products data
   const products = [
     { id: 1, name: "Urban Streetwear Hoodie", price: 79, category: "hoodies", image: "👕", rating: 4.8, reviews: 124 },
     { id: 2, name: "Fresh Kicks Sneakers", price: 129, category: "sneakers", image: "👟", rating: 4.9, reviews: 89 },
     { id: 3, name: "Denim Jacket Classic", price: 99, category: "jackets", image: "🧥", rating: 4.7, reviews: 156 },
-    { id: 4, name: "Street Style Pants", price: 69, category: "pants", image: "👖", rating: 4.6, reviews: 98 },
+    { id: 4, name: "Street Style Pants", price: 69, category: "jeans", image: "👖", rating: 4.6, reviews: 98 },
     { id: 5, name: "Casual Button Shirt", price: 59, category: "shirts", image: "👔", rating: 4.8, reviews: 67 },
     { id: 6, name: "Sport Cap Essential", price: 29, category: "accessories", image: "🧢", rating: 4.5, reviews: 234 },
     { id: 7, name: "Premium Tech Tee", price: 45, category: "shirts", image: "👕", rating: 4.7, reviews: 123 },
@@ -29,19 +39,37 @@ const Shop = () => {
     { id: 'hoodies', name: 'Hoodies' },
     { id: 'sneakers', name: 'Sneakers' },
     { id: 'jackets', name: 'Jackets' },
-    { id: 'pants', name: 'Pants' },
+    { id: 'jeans', name: 'Jeans' },
     { id: 'shirts', name: 'Shirts' },
     { id: 'accessories', name: 'Accessories' },
   ];
 
   const filteredProducts = useMemo(() => {
-    return products.filter(product => {
+    let filtered = products.filter(product => {
       const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
       const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
       return matchesSearch && matchesCategory && matchesPrice;
     });
-  }, [searchTerm, selectedCategory, priceRange]);
+
+    // Sort products
+    switch (sortBy) {
+      case 'price-low':
+        filtered.sort((a, b) => a.price - b.price);
+        break;
+      case 'price-high':
+        filtered.sort((a, b) => b.price - a.price);
+        break;
+      case 'rating':
+        filtered.sort((a, b) => b.rating - a.rating);
+        break;
+      default:
+        // newest - keep original order
+        break;
+    }
+
+    return filtered;
+  }, [searchTerm, selectedCategory, priceRange, sortBy]);
 
   return (
     <div className="min-h-screen bg-white-smoke">
@@ -181,11 +209,12 @@ const Shop = () => {
               {filteredProducts.map((product, index) => (
                 <motion.div
                   key={product.id}
-                  className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
+                  className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
                   initial={{ y: 50, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   whileHover={{ y: -5 }}
+                  onClick={() => navigate(`/product/${product.id}`)}
                 >
                   <div className="relative">
                     <div className="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
@@ -198,6 +227,10 @@ const Shop = () => {
                         className="p-2 bg-white rounded-full shadow-lg hover:bg-neon-green hover:text-white"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          console.log('Added to wishlist:', product.name);
+                        }}
                       >
                         <Heart className="w-4 h-4" />
                       </motion.button>
@@ -205,6 +238,10 @@ const Shop = () => {
                         className="p-2 bg-white rounded-full shadow-lg hover:bg-electric-indigo hover:text-white"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          console.log('Added to cart:', product.name);
+                        }}
                       >
                         <ShoppingCart className="w-4 h-4" />
                       </motion.button>
@@ -227,6 +264,10 @@ const Shop = () => {
                       className="w-full py-2 bg-gradient-neon text-white font-semibold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log('Added to cart:', product.name);
+                      }}
                     >
                       Add to Cart
                     </motion.button>
@@ -234,6 +275,32 @@ const Shop = () => {
                 </motion.div>
               ))}
             </motion.div>
+
+            {/* No products found */}
+            {filteredProducts.length === 0 && (
+              <motion.div
+                className="text-center py-16"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6 }}
+              >
+                <div className="text-6xl mb-4">😔</div>
+                <h3 className="text-2xl font-bold text-soft-black mb-2">No products found</h3>
+                <p className="text-gray-600 mb-6">Try adjusting your filters or search terms</p>
+                <motion.button
+                  onClick={() => {
+                    setSearchTerm('');
+                    setSelectedCategory('all');
+                    setPriceRange([0, 200]);
+                  }}
+                  className="bg-gradient-neon text-white px-6 py-3 rounded-lg font-semibold"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Clear Filters
+                </motion.button>
+              </motion.div>
+            )}
           </div>
         </div>
       </div>

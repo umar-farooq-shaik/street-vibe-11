@@ -1,143 +1,122 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Heart, ShoppingCart } from 'lucide-react';
+import { Star, Heart, ShoppingCart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const TrendingSection = () => {
-  const products = [
-    { id: 1, name: "Urban Streetwear Hoodie", price: 79, emoji: "👕", category: "Hoodies" },
-    { id: 2, name: "Fresh Kicks Sneakers", price: 129, emoji: "👟", category: "Sneakers" },
-    { id: 3, name: "Denim Jacket Classic", price: 99, emoji: "🧥", category: "Jackets" },
-    { id: 4, name: "Street Style Pants", price: 69, emoji: "👖", category: "Pants" },
-    { id: 5, name: "Casual Button Shirt", price: 59, emoji: "👔", category: "Shirts" },
-    { id: 6, name: "Sport Cap Essential", price: 29, emoji: "🧢", category: "Accessories" }
+  const navigate = useNavigate();
+
+  const trendingProducts = [
+    { id: 1, name: "Urban Streetwear Hoodie", price: 79, originalPrice: 99, rating: 4.8, image: "👕" },
+    { id: 2, name: "Fresh Kicks Sneakers", price: 129, originalPrice: 159, rating: 4.9, image: "👟" },
+    { id: 3, name: "Denim Jacket Classic", price: 99, originalPrice: 129, rating: 4.7, image: "🧥" },
+    { id: 4, name: "Street Style Pants", price: 69, originalPrice: 89, rating: 4.6, image: "👖" },
+    { id: 5, name: "Casual Button Shirt", price: 59, originalPrice: 79, rating: 4.8, image: "👔" },
+    { id: 6, name: "Sport Cap Essential", price: 29, originalPrice: 39, rating: 4.5, image: "🧢" },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
   return (
-    <section className="py-20 bg-white-smoke">
+    <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-soft-black mb-4">
-            Trending <span className="text-gradient-neon">Collections</span>
+            Trending <span className="text-gradient-neon">Now</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Discover what's hot right now. Our most popular pieces that everyone's talking about.
+            Discover the hottest picks that everyone's talking about
           </p>
         </motion.div>
 
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {products.map((product) => (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          {trendingProducts.map((product, index) => (
             <motion.div
               key={product.id}
-              className="group relative"
-              variants={itemVariants}
-              whileHover={{ y: -10 }}
-              transition={{ duration: 0.3 }}
+              className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -5 }}
+              onClick={() => navigate(`/product/${product.id}`)}
             >
-              <div className="glass-morphism rounded-2xl p-6 hover:shadow-2xl transition-all duration-300 group-hover:bg-white/20">
-                {/* Product Image */}
-                <div className="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden">
-                  <motion.div
-                    className="text-8xl"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ duration: 0.3 }}
+              <div className="relative">
+                <div className="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+                  <span className="text-4xl">{product.image}</span>
+                </div>
+                
+                {/* Quick Actions */}
+                <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <motion.button
+                    className="p-2 bg-white rounded-full shadow-lg hover:bg-neon-green hover:text-white"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      console.log('Added to wishlist:', product.name);
+                    }}
                   >
-                    {product.emoji}
-                  </motion.div>
-                  
-                  {/* Overlay Actions */}
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
-                    <motion.button
-                      className="p-3 bg-white rounded-full hover:bg-neon-green hover:text-white transition-colors"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <Heart className="w-5 h-5" />
-                    </motion.button>
-                    <motion.button
-                      className="p-3 bg-white rounded-full hover:bg-electric-indigo hover:text-white transition-colors"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <ShoppingCart className="w-5 h-5" />
-                    </motion.button>
-                  </div>
+                    <Heart className="w-4 h-4" />
+                  </motion.button>
+                  <motion.button
+                    className="p-2 bg-white rounded-full shadow-lg hover:bg-electric-indigo hover:text-white"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      console.log('Added to cart:', product.name);
+                    }}
+                  >
+                    <ShoppingCart className="w-4 h-4" />
+                  </motion.button>
                 </div>
 
-                {/* Product Info */}
-                <div className="space-y-2">
-                  <div className="text-sm text-electric-indigo font-medium">{product.category}</div>
-                  <h3 className="font-semibold text-soft-black group-hover:text-electric-indigo transition-colors">
-                    {product.name}
-                  </h3>
-                  <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-soft-black">${product.price}</span>
-                    <div className="flex items-center gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <span key={i} className="text-cyber-yellow text-sm">⭐</span>
-                      ))}
-                      <span className="text-sm text-gray-500 ml-1">(4.8)</span>
-                    </div>
+                {/* Discount Badge */}
+                {product.originalPrice > product.price && (
+                  <div className="absolute top-3 left-3 bg-neon-green text-white px-2 py-1 rounded-full text-xs font-bold">
+                    -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+                  </div>
+                )}
+              </div>
+              
+              <div className="p-4">
+                <h3 className="font-semibold text-soft-black mb-2 group-hover:text-electric-indigo transition-colors line-clamp-2">
+                  {product.name}
+                </h3>
+                
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg font-bold text-soft-black">${product.price}</span>
+                    {product.originalPrice > product.price && (
+                      <span className="text-sm text-gray-500 line-through">${product.originalPrice}</span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Star className="w-4 h-4 text-cyber-yellow fill-current" />
+                    <span className="text-sm text-gray-600">{product.rating}</span>
                   </div>
                 </div>
-
-                {/* Quick Add Button */}
-                <motion.button
-                  className="w-full mt-4 py-3 bg-gradient-neon text-white font-semibold rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Quick Add to Cart
-                </motion.button>
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
-        {/* View More Button */}
         <motion.div
           className="text-center mt-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
         >
           <motion.button
-            className="px-8 py-4 border-2 border-electric-indigo text-electric-indigo font-semibold rounded-full hover:bg-electric-indigo hover:text-white transition-all duration-300"
+            onClick={() => navigate('/shop')}
+            className="bg-gradient-neon text-white px-8 py-3 rounded-lg font-semibold"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
