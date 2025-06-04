@@ -1,11 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ShoppingCart, Search, User, Heart } from 'lucide-react';
+import { ShoppingCart, Search, User, Heart, Menu, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [cartCount, setCartCount] = useState(3);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +18,13 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Shop', path: '/shop' },
+    { name: 'Categories', path: '/shop' },
+    { name: 'Trending', path: '/shop' },
+  ];
 
   return (
     <motion.nav
@@ -31,7 +41,8 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <motion.div
-            className="flex items-center space-x-2"
+            className="flex items-center space-x-2 cursor-pointer"
+            onClick={() => navigate('/')}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -43,22 +54,22 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {['Shop', 'Categories', 'Trending', 'About'].map((item) => (
-              <motion.a
-                key={item}
-                href="#"
+            {navItems.map((item) => (
+              <motion.button
+                key={item.name}
+                onClick={() => navigate(item.path)}
                 className="text-soft-black hover:text-electric-indigo font-medium transition-colors relative"
                 whileHover={{ y: -2 }}
                 transition={{ duration: 0.2 }}
               >
-                {item}
+                {item.name}
                 <motion.div
                   className="absolute bottom-0 left-0 w-full h-0.5 bg-neon-green origin-left"
                   initial={{ scaleX: 0 }}
                   whileHover={{ scaleX: 1 }}
                   transition={{ duration: 0.3 }}
                 />
-              </motion.a>
+              </motion.button>
             ))}
           </div>
 
@@ -81,6 +92,7 @@ const Navbar = () => {
             </motion.button>
 
             <motion.button
+              onClick={() => navigate('/auth')}
               className="p-2 hover:bg-gray-100 rounded-full transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -89,6 +101,7 @@ const Navbar = () => {
             </motion.button>
 
             <motion.button
+              onClick={() => navigate('/cart')}
               className="relative p-2 hover:bg-gray-100 rounded-full transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -105,8 +118,49 @@ const Navbar = () => {
                 </motion.span>
               )}
             </motion.button>
+
+            {/* Mobile Menu Button */}
+            <motion.button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 hover:bg-gray-100 rounded-full transition-colors"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-5 h-5 text-soft-black" />
+              ) : (
+                <Menu className="w-5 h-5 text-soft-black" />
+              )}
+            </motion.button>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        <motion.div
+          className={`md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'}`}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ 
+            opacity: isMobileMenuOpen ? 1 : 0, 
+            y: isMobileMenuOpen ? 0 : -20 
+          }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="py-4 space-y-2 bg-white/90 backdrop-blur-md rounded-lg mt-2">
+            {navItems.map((item) => (
+              <motion.button
+                key={item.name}
+                onClick={() => {
+                  navigate(item.path);
+                  setIsMobileMenuOpen(false);
+                }}
+                className="block w-full text-left px-4 py-2 text-soft-black hover:text-electric-indigo hover:bg-gray-50 transition-colors"
+                whileHover={{ x: 5 }}
+              >
+                {item.name}
+              </motion.button>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </motion.nav>
   );
