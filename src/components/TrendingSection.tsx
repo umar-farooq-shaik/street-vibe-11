@@ -1,13 +1,15 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Star, Heart, ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useWishlist } from '../contexts/WishlistContext';
+import { useCart } from '../contexts/CartContext';
+import { toast } from '../hooks/use-toast';
 
 const TrendingSection = () => {
   const navigate = useNavigate();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const { addToCart } = useCart();
 
   const trendingProducts = [
     { id: 1, name: "Urban Streetwear Hoodie", price: 79, originalPrice: 99, rating: 4.8, image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop&crop=center", category: "hoodies", reviews: 124 },
@@ -24,6 +26,21 @@ const TrendingSection = () => {
     } else {
       addToWishlist(product);
     }
+  };
+
+  const handleAddToCart = (product: any) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: 1
+    });
+    
+    toast({
+      title: "Added to Cart",
+      description: `${product.name} added to your cart`,
+    });
   };
 
   return (
@@ -88,7 +105,7 @@ const TrendingSection = () => {
                     whileTap={{ scale: 0.9 }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      console.log('Added to cart:', product.name);
+                      handleAddToCart(product);
                     }}
                   >
                     <ShoppingCart className="w-4 h-4" />

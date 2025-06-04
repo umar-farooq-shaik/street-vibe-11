@@ -1,9 +1,10 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, ShoppingCart, Star, Minus, Plus, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useWishlist } from '../contexts/WishlistContext';
+import { useCart } from '../contexts/CartContext';
+import { toast } from '../hooks/use-toast';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -12,6 +13,7 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('M');
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const { addToCart } = useCart();
 
   // Mock product data
   const product = {
@@ -53,6 +55,22 @@ const ProductDetail = () => {
     } else {
       addToWishlist(product);
     }
+  };
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      size: selectedSize,
+      image: product.image,
+      quantity: quantity
+    });
+    
+    toast({
+      title: "Added to Cart",
+      description: `${quantity} ${product.name} added to your cart`,
+    });
   };
 
   return (
@@ -191,6 +209,7 @@ const ProductDetail = () => {
               {/* Action Buttons */}
               <div className="flex gap-4 mb-6">
                 <motion.button
+                  onClick={handleAddToCart}
                   className="flex-1 bg-gradient-neon text-white py-3 px-6 rounded-lg font-semibold flex items-center justify-center gap-2"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}

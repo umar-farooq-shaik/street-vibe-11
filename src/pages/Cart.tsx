@@ -3,35 +3,14 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useCart } from '../contexts/CartContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const Cart = () => {
   const navigate = useNavigate();
-  
-  const [cartItems, setCartItems] = useState([
-    { id: 1, name: "Urban Streetwear Hoodie", price: 79, quantity: 2, size: "M", image: "👕" },
-    { id: 2, name: "Fresh Kicks Sneakers", price: 129, quantity: 1, size: "42", image: "👟" },
-    { id: 3, name: "Denim Jacket Classic", price: 99, quantity: 1, size: "L", image: "🧥" },
-  ]);
-
+  const { cartItems, updateQuantity, removeFromCart } = useCart();
   const [couponCode, setCouponCode] = useState('');
-
-  const updateQuantity = (id: number, newQuantity: number) => {
-    if (newQuantity === 0) {
-      removeItem(id);
-      return;
-    }
-    setCartItems(items => 
-      items.map(item => 
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
-
-  const removeItem = (id: number) => {
-    setCartItems(items => items.filter(item => item.id !== id));
-  };
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const shipping = subtotal > 100 ? 0 : 10;
@@ -94,7 +73,7 @@ const Cart = () => {
             >
               {cartItems.map((item, index) => (
                 <motion.div
-                  key={item.id}
+                  key={`${item.id}-${item.size}`}
                   className="flex items-center gap-4 p-6 border-b border-gray-100 last:border-b-0"
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
@@ -102,14 +81,18 @@ const Cart = () => {
                   layout
                 >
                   {/* Product Image */}
-                  <div className="w-20 h-20 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg flex items-center justify-center">
-                    <span className="text-3xl">{item.image}</span>
+                  <div className="w-20 h-20 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg overflow-hidden">
+                    <img 
+                      src={item.image} 
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
 
                   {/* Product Info */}
                   <div className="flex-1">
                     <h3 className="font-semibold text-soft-black mb-1">{item.name}</h3>
-                    <p className="text-gray-600 text-sm">Size: {item.size}</p>
+                    {item.size && <p className="text-gray-600 text-sm">Size: {item.size}</p>}
                     <p className="text-lg font-bold text-soft-black mt-2">${item.price}</p>
                   </div>
 
@@ -138,7 +121,7 @@ const Cart = () => {
 
                   {/* Remove Button */}
                   <motion.button
-                    onClick={() => removeItem(item.id)}
+                    onClick={() => removeFromCart(item.id)}
                     className="p-2 text-gray-400 hover:text-red-500 transition-colors"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}

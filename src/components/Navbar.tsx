@@ -4,13 +4,14 @@ import { motion } from 'framer-motion';
 import { ShoppingCart, Search, User, Heart, Menu, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useWishlist } from '../contexts/WishlistContext';
+import { useCart } from '../contexts/CartContext';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [cartCount, setCartCount] = useState(0); // Changed to 0 initially
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { wishlist } = useWishlist();
+  const { getTotalItems } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,9 +25,11 @@ const Navbar = () => {
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Shop', path: '/shop' },
-    { name: 'Contact', path: '/contact' }, // Changed from Categories to Contact
+    { name: 'Contact', path: '/contact' },
     { name: 'Trending', path: '/shop' },
   ];
+
+  const cartCount = getTotalItems();
 
   return (
     <motion.nav
@@ -78,7 +81,7 @@ const Navbar = () => {
           {/* Right Section - Swapped order: Search, Wishlist, Profile, Cart */}
           <div className="flex items-center space-x-4">
             <motion.button
-              onClick={() => navigate('/shop')} // Navigate to shop page
+              onClick={() => navigate('/shop')}
               className="p-2 hover:bg-gray-100 rounded-full transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}

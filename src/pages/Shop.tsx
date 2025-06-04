@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { Search, Filter, Grid, List, Heart, ShoppingCart } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useWishlist } from '../contexts/WishlistContext';
+import { useCart } from '../contexts/CartContext';
+import { toast } from '../hooks/use-toast';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -16,6 +18,7 @@ const Shop = () => {
   const [sortBy, setSortBy] = useState('newest');
   const [viewMode, setViewMode] = useState('grid');
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const { addToCart } = useCart();
 
   // Update category when URL params change and scroll to products
   useEffect(() => {
@@ -124,6 +127,21 @@ const Shop = () => {
     } else {
       addToWishlist(product);
     }
+  };
+
+  const handleAddToCart = (product: any) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: 1
+    });
+    
+    toast({
+      title: "Added to Cart",
+      description: `${product.name} added to your cart`,
+    });
   };
 
   const filteredProducts = useMemo(() => {
@@ -330,7 +348,7 @@ const Shop = () => {
                         whileTap={{ scale: 0.9 }}
                         onClick={(e) => {
                           e.stopPropagation();
-                          console.log('Added to cart:', product.name);
+                          handleAddToCart(product);
                         }}
                       >
                         <ShoppingCart className="w-4 h-4" />
@@ -356,7 +374,7 @@ const Shop = () => {
                       whileTap={{ scale: 0.98 }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        console.log('Added to cart:', product.name);
+                        handleAddToCart(product);
                       }}
                     >
                       Add to Cart
