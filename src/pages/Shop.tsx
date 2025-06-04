@@ -41,12 +41,14 @@ const Shop = () => {
 
   // 100 new products with diverse categories and real fashion images
   const products = [
-    // 5 New Premium Products at the top
+    // 1st card - Premium Leather Aviator Jacket
     { id: 201, name: "Premium Leather Aviator Jacket", price: 299, category: "jackets", image: "https://images.unsplash.com/photo-1520975954732-35dd22299614?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 312 },
-    { id: 202, name: "Designer High-Top Sneakers", price: 249, category: "sneakers", image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 456 },
     
-    // 3rd card - Denim Jacket Classic
-    { id: 37, name: "Denim Jacket Classic", price: 99, category: "jackets", image: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 156 },
+    // 2nd card - Embroidered Hoodie
+    { id: 12, name: "Embroidered Hoodie", price: 115, category: "hoodies", image: "https://images.unsplash.com/photo-1564557287817-3785e38ec1f5?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 189 },
+    
+    // 3rd card - Leather Biker Jacket
+    { id: 42, name: "Leather Biker Jacket", price: 249, category: "jackets", image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 289 },
     
     // 4th card - Cropped Jeans  
     { id: 64, name: "Cropped Jeans", price: 79, category: "jeans", image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&h=500&fit=crop&crop=center", rating: 4.4, reviews: 134 },
@@ -57,13 +59,19 @@ const Shop = () => {
     // Continue with remaining products (excluding the removed ones)
     { id: 204, name: "Limited Edition Basketball Shoes", price: 199, category: "sneakers", image: "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 523 },
 
-    // Hoodies (13 products - removed pastel pink hoodie)
+    // 3rd card - Denim Jacket Classic
+    { id: 37, name: "Denim Jacket Classic", price: 99, category: "jackets", image: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 156 },
+
+    // Hoodies (12 products - removed embroidered hoodie as it's moved to 2nd position)
     { id: 1, name: "Urban Streetwear Hoodie", price: 79, category: "hoodies", image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 124 },
     { id: 6, name: "Minimalist White Hoodie", price: 85, category: "hoodies", image: "https://images.unsplash.com/photo-1618677603286-0ec56cb6e1b5?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 87 },
     { id: 8, name: "Neon Green Hoodie", price: 88, category: "hoodies", image: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 78 },
     { id: 9, name: "Tie-Dye Hoodie", price: 105, category: "hoodies", image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 167 },
+    
+    // 12th card - Designer High-Top Sneakers
+    { id: 202, name: "Designer High-Top Sneakers", price: 249, category: "sneakers", image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 456 },
+    
     { id: 11, name: "Gothic Black Hoodie", price: 89, category: "hoodies", image: "https://images.unsplash.com/photo-1607345366928-199ea26cfe3e?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 98 },
-    { id: 12, name: "Embroidered Hoodie", price: 115, category: "hoodies", image: "https://images.unsplash.com/photo-1564557287817-3785e38ec1f5?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 189 },
     { id: 13, name: "Japanese Text Hoodie", price: 94, category: "hoodies", image: "https://images.unsplash.com/photo-1516762689617-e1cffcef479d?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 76 },
     { id: 14, name: "Chrome Hearts Hoodie", price: 125, category: "hoodies", image: "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 234 },
     { id: 15, name: "Mesh Panel Hoodie", price: 108, category: "hoodies", image: "https://images.unsplash.com/photo-1621184455862-c163dfb30e0f?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 156 },
@@ -71,7 +79,7 @@ const Shop = () => {
     { id: 17, name: "Color Block Hoodie", price: 99, category: "hoodies", image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 167 },
     { id: 18, name: "Reflective Hoodie", price: 135, category: "hoodies", image: "https://images.unsplash.com/photo-1622445275576-721325763afe?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 198 },
 
-    // Sneakers (13 products - removed neon running shoes and led light sneakers)
+    // Sneakers (12 products - removed designer high-top as it's moved to 12th position)
     { id: 19, name: "White Leather Sneakers", price: 149, category: "sneakers", image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 203 },
     { id: 21, name: "High-Top Canvas Sneakers", price: 89, category: "sneakers", image: "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 145 },
     { id: 22, name: "Black Athletic Sneakers", price: 159, category: "sneakers", image: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 234 },
@@ -86,10 +94,9 @@ const Shop = () => {
     { id: 34, name: "Sock Sneakers", price: 99, category: "sneakers", image: "https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=500&h=500&fit=crop&crop=center", rating: 4.4, reviews: 87 },
     { id: 36, name: "Designer Collaboration Sneakers", price: 299, category: "sneakers", image: "https://images.unsplash.com/photo-1584735175315-9d5df23860e6?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 312 },
 
-    // Jackets (13 products - removed luxury wool peacoat and sherpa jacket)
+    // Jackets (11 products - removed leather biker jacket as it's moved to 3rd position)
     { id: 39, name: "Fleece Zip-Up Jacket", price: 79, category: "jackets", image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 89 },
     { id: 40, name: "Military Style Jacket", price: 129, category: "jackets", image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 198 },
-    { id: 42, name: "Leather Biker Jacket", price: 249, category: "jackets", image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 289 },
     { id: 45, name: "Corduroy Jacket", price: 109, category: "jackets", image: "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 145 },
     { id: 46, name: "Trucker Jacket", price: 89, category: "jackets", image: "https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 123 },
     { id: 47, name: "Bomber Jacket", price: 139, category: "jackets", image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 198 },
@@ -97,7 +104,7 @@ const Shop = () => {
     { id: 50, name: "Utility Vest", price: 79, category: "jackets", image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 134 },
     { id: 51, name: "Blazer Jacket", price: 189, category: "jackets", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 234 },
 
-    // Jeans (14 products)
+    // Jeans (13 products - removed cropped jeans as it's moved to 4th position)
     { id: 52, name: "Street Style Pants", price: 69, category: "jeans", image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 98 },
     { id: 53, name: "Skinny Fit Jeans", price: 89, category: "jeans", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 178 },
     { id: 54, name: "Ripped Distressed Jeans", price: 95, category: "jeans", image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 145 },
@@ -111,7 +118,7 @@ const Shop = () => {
     { id: 65, name: "Raw Denim Jeans", price: 149, category: "jeans", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&h=500&fit=crop&crop=center", rating: 4.8, reviews: 234 },
     { id: 66, name: "Embroidered Jeans", price: 139, category: "jeans", image: "https://images.unsplash.com/photo-1551232864-3f0890e580d9?w=500&h=500&fit=crop&crop=center", rating: 4.9, reviews: 198 },
 
-    // Shirts (24 products)
+    // Shirts (23 products - removed casual button shirt as it's moved to 5th position)
     { id: 68, name: "Premium Tech Tee", price: 45, category: "shirts", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 123 },
     { id: 70, name: "Oversized T-Shirt", price: 39, category: "shirts", image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 156 },
     { id: 71, name: "Striped Long Sleeve", price: 55, category: "shirts", image: "https://images.unsplash.com/photo-1622445275576-721325763afe?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 89 },
@@ -119,7 +126,6 @@ const Shop = () => {
     { id: 73, name: "Polo Shirt", price: 49, category: "shirts", image: "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 134 },
     { id: 74, name: "Crop Top", price: 29, category: "shirts", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 167 },
     { id: 76, name: "Tie-Dye T-Shirt", price: 38, category: "shirts", image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&h=500&fit=crop&crop=center", rating: 4.5, reviews: 145 },
-    { id: 77, name: "Henley Shirt", price: 52, category: "shirts", image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500&h=500&fit=crop&center", rating: 4.6, reviews: 123 },
     { id: 78, name: "Tank Top", price: 25, category: "shirts", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop&crop=center", rating: 4.4, reviews: 98 },
     { id: 79, name: "Mesh T-Shirt", price: 48, category: "shirts", image: "https://images.unsplash.com/photo-1622445275576-721325763afe?w=500&h=500&fit=crop&crop=center", rating: 4.7, reviews: 156 },
     { id: 81, name: "Linen Shirt", price: 79, category: "shirts", image: "https://images.unsplash.com/photo-1621184455862-c163dfb30e0f?w=500&h=500&fit=crop&crop=center", rating: 4.6, reviews: 167 },

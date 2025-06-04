@@ -8,12 +8,12 @@ const CategoriesSection = () => {
   const navigate = useNavigate();
 
   const categories = [
-    { id: 'shirts', name: 'Shirts', icon: '👕', count: 120 },
-    { id: 'jackets', name: 'Jackets', icon: '🧥', count: 85 },
-    { id: 'sneakers', name: 'Sneakers', icon: '👟', count: 95 },
-    { id: 'accessories', name: 'Accessories', icon: '🧢', count: 150 },
-    { id: 'jeans', name: 'Jeans', icon: '👖', count: 70 },
-    { id: 'hoodies', name: 'Hoodies', icon: '🧷', count: 60 },
+    { id: 'shirts', name: 'Shirts', image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=300&h=300&fit=crop&crop=center', count: 120 },
+    { id: 'jackets', name: 'Jackets', image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=300&h=300&fit=crop&crop=center', count: 85 },
+    { id: 'sneakers', name: 'Sneakers', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop&crop=center', count: 95 },
+    { id: 'accessories', name: 'Accessories', image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=300&h=300&fit=crop&crop=center', count: 150 },
+    { id: 'jeans', name: 'Jeans', image: 'https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=300&h=300&fit=crop&crop=center', count: 70 },
+    { id: 'hoodies', name: 'Hoodies', image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=300&h=300&fit=crop&crop=center', count: 60 },
   ];
 
   const features = [
@@ -75,8 +75,14 @@ const CategoriesSection = () => {
                 whileHover={{ y: -10 }}
                 onClick={() => navigate(`/shop?category=${category.id}`)}
               >
-                <div className="bg-white rounded-2xl p-8 shadow-lg group-hover:shadow-2xl transition-all duration-300 mb-4">
-                  <div className="text-6xl mb-4">{category.icon}</div>
+                <div className="bg-white rounded-2xl p-4 shadow-lg group-hover:shadow-2xl transition-all duration-300 mb-4">
+                  <div className="aspect-square rounded-xl overflow-hidden mb-4">
+                    <img 
+                      src={category.image} 
+                      alt={category.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
                   <h3 className="font-semibold text-soft-black mb-2 group-hover:text-electric-indigo transition-colors">
                     {category.name}
                   </h3>
