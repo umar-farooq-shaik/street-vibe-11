@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, Grid, List, Heart, ShoppingCart } from 'lucide-react';
@@ -19,6 +18,11 @@ const Shop = () => {
   const [viewMode, setViewMode] = useState('grid');
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const { addToCart } = useCart();
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // Update category when URL params change and scroll to products
   useEffect(() => {
@@ -175,9 +179,9 @@ const Shop = () => {
     <div className="min-h-screen bg-white-smoke">
       <Navbar />
       
-      {/* Page Header - removed pt-24 to start from top */}
+      {/* Page Header - increased padding */}
       <motion.div
-        className="pt-16 pb-8 bg-gradient-dark"
+        className="pt-20 pb-12 bg-gradient-dark"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
