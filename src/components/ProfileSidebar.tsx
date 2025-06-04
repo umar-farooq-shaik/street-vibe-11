@@ -7,10 +7,11 @@ import { useNavigate } from 'react-router-dom';
 interface ProfileSidebarProps {
   isOpen: boolean;
   onClose: () => void;
-  user: any; // Replace with proper user type when auth is implemented
+  user: any;
+  onSignOut: () => void;
 }
 
-const ProfileSidebar = ({ isOpen, onClose, user }: ProfileSidebarProps) => {
+const ProfileSidebar = ({ isOpen, onClose, user, onSignOut }: ProfileSidebarProps) => {
   const navigate = useNavigate();
 
   const menuItems = [
@@ -40,9 +41,8 @@ const ProfileSidebar = ({ isOpen, onClose, user }: ProfileSidebarProps) => {
   };
 
   const handleSignOut = () => {
+    onSignOut();
     console.log('Signing out...');
-    // Add sign out logic here
-    onClose();
   };
 
   if (!isOpen) return null;
@@ -79,17 +79,39 @@ const ProfileSidebar = ({ isOpen, onClose, user }: ProfileSidebarProps) => {
           </div>
 
           {/* User Info */}
-          <div className="flex items-center gap-4 mb-8 p-4 bg-gradient-to-r from-neon-green/10 to-electric-indigo/10 rounded-lg">
-            <div className="w-12 h-12 bg-gradient-neon rounded-full flex items-center justify-center">
-              <User className="w-6 h-6 text-white" />
+          <div className="mb-8 p-4 bg-gradient-to-r from-neon-green/10 to-electric-indigo/10 rounded-lg">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-gradient-neon rounded-full flex items-center justify-center">
+                {user?.picture ? (
+                  <img
+                    src={user.picture}
+                    alt="Profile"
+                    className="w-12 h-12 rounded-full"
+                  />
+                ) : (
+                  <User className="w-6 h-6 text-white" />
+                )}
+              </div>
+              <div>
+                <h3 className="font-semibold text-soft-black">
+                  {user?.name || 'Guest User'}
+                </h3>
+                <p className="text-sm text-gray-600">
+                  {user?.email || 'guest@example.com'}
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-semibold text-soft-black">
-                {user?.name || 'Guest User'}
-              </h3>
-              <p className="text-sm text-gray-600">
-                {user?.email || 'guest@example.com'}
-              </p>
+            
+            {/* Display username and email separately for clarity */}
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span className="text-gray-600">Username:</span>
+                <span className="text-soft-black font-medium">{user?.name || 'Guest'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Email:</span>
+                <span className="text-soft-black font-medium">{user?.email || 'N/A'}</span>
+              </div>
             </div>
           </div>
 

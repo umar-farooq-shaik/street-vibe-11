@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, Search, User, Heart, Menu, X } from 'lucide-react';
@@ -14,7 +15,7 @@ const Navbar = () => {
   const { wishlist } = useWishlist();
   const { getTotalItems } = useCart();
 
-  // Mock authentication state - replace with real auth state
+  // Authentication state - get from localStorage
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
 
@@ -27,19 +28,15 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Mock Google authentication function - replace with real implementation
-  const handleGoogleAuth = () => {
-    console.log('Starting Google authentication...');
-    // Simulate successful login
-    setIsAuthenticated(true);
-    setUser({
-      id: '1',
-      name: 'John Doe',
-      email: 'john.doe@gmail.com',
-      picture: '/placeholder.svg'
-    });
-    console.log('User authenticated successfully');
-  };
+  // Check for existing user session on component mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const userData = JSON.parse(storedUser);
+      setUser(userData);
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   const handleProfileClick = () => {
     if (isAuthenticated) {
@@ -47,6 +44,14 @@ const Navbar = () => {
     } else {
       navigate('/auth');
     }
+  };
+
+  const handleSignOut = () => {
+    setIsAuthenticated(false);
+    setUser(null);
+    localStorage.removeItem('user');
+    setIsProfileSidebarOpen(false);
+    console.log('User signed out');
   };
 
   // Reordered navigation items: Home, Shop, Trending, Contact
@@ -244,6 +249,7 @@ const Navbar = () => {
             isOpen={isProfileSidebarOpen}
             onClose={() => setIsProfileSidebarOpen(false)}
             user={user}
+            onSignOut={handleSignOut}
           />
         )}
       </AnimatePresence>

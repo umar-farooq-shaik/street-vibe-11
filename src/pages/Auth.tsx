@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
@@ -16,34 +17,58 @@ const Auth = () => {
     name: ''
   });
 
+  const createUserAccount = (userData: any) => {
+    // Save user to localStorage
+    localStorage.setItem('user', JSON.stringify(userData));
+    console.log('User account created:', userData);
+    
+    // Navigate to home page
+    navigate('/');
+    
+    // Force a page reload to update the navbar state
+    window.location.reload();
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(isLogin ? 'Login' : 'Signup', formData);
-    // Add authentication logic here
-    // For now, simulate successful authentication
-    navigate('/');
+    
+    if (!isLogin && formData.password !== formData.confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    // Create user profile
+    const userProfile = {
+      id: 'user_' + Date.now(),
+      name: isLogin ? formData.email.split('@')[0] : formData.name,
+      email: formData.email,
+      picture: null,
+      provider: 'email',
+      createdAt: new Date().toISOString()
+    };
+
+    console.log(isLogin ? 'Login successful' : 'Signup successful', userProfile);
+    createUserAccount(userProfile);
   };
 
   const handleGoogleAuth = () => {
     console.log('Starting Google authentication...');
     
     // Simulate Google OAuth process
-    // In a real implementation, this would redirect to Google OAuth
     setTimeout(() => {
       console.log('Google authentication successful');
-      // Simulate creating user profile
+      
+      // Create user profile with Google data
       const userProfile = {
         id: 'google_' + Date.now(),
         name: 'John Doe',
         email: 'john.doe@gmail.com',
         picture: '/placeholder.svg',
-        provider: 'google'
+        provider: 'google',
+        createdAt: new Date().toISOString()
       };
       
-      console.log('User profile created:', userProfile);
-      
-      // Redirect to home page after successful authentication
-      navigate('/');
+      createUserAccount(userProfile);
     }, 1000);
   };
 
