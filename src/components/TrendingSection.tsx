@@ -17,7 +17,7 @@ const TrendingSection = () => {
     { id: 2, name: "Fresh Kicks Sneakers", price: 129, originalPrice: 159, rating: 4.9, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop&crop=center", category: "sneakers", reviews: 89 },
     { id: 21, name: "Leather Bomber Jacket", price: 189, originalPrice: 229, rating: 4.9, image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=400&fit=crop&crop=center", category: "jackets", reviews: 267 },
     { id: 29, name: "High-Waisted Jeans", price: 99, originalPrice: 129, rating: 4.8, image: "https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=400&h=400&fit=crop&crop=center", category: "jeans", reviews: 234 },
-    { id: 16, name: "Women's Cropped Hoodie", price: 75, originalPrice: 95, rating: 4.7, image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop&crop=center", category: "hoodies", reviews: 189 },
+    { id: 16, name: "Women's Cropped Hoodie", price: 75, originalPrice: 95, rating: 4.7, image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=400&fit=crop&crop=center", category: "hoodies", reviews: 189 },
     { id: 45, name: "Watch", price: 159, originalPrice: 199, rating: 4.9, image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400&h=400&fit=crop&crop=center", category: "accessories", reviews: 267 },
   ];
 
