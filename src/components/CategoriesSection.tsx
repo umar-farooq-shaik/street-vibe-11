@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Truck, RotateCcw, Headphones, Shield } from 'lucide-react';
@@ -11,9 +10,9 @@ const CategoriesSection = () => {
     { id: 'shirts', name: 'Shirts', image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=300&h=300&fit=crop&crop=center', count: 120 },
     { id: 'jackets', name: 'Jackets', image: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?w=300&h=300&fit=crop&crop=center', count: 85 },
     { id: 'sneakers', name: 'Sneakers', image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300&h=300&fit=crop&crop=center', count: 95 },
-    { id: 'accessories', name: 'Accessories', image: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=300&h=300&fit=crop&crop=center', count: 150 },
+    { id: 'accessories', name: 'Accessories', image: 'https://images.unsplash.com/photo-1577803645773-f96470509666?w=300&h=300&fit=crop&crop=center', count: 150 },
     { id: 'jeans', name: 'Jeans', image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=300&h=300&fit=crop&crop=center', count: 70 },
-    { id: 'hoodies', name: 'Hoodies', image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=300&h=300&fit=crop&crop=center', count: 60 },
+    { id: 'hoodies', name: 'Hoodies', image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=300&h=300&fit=crop&crop=center', count: 60 },
   ];
 
   const features = [
