@@ -3,6 +3,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, Grid, List, Heart, ShoppingCart } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useWishlist } from '../contexts/WishlistContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -14,6 +15,7 @@ const Shop = () => {
   const [priceRange, setPriceRange] = useState([0, 200]);
   const [sortBy, setSortBy] = useState('newest');
   const [viewMode, setViewMode] = useState('grid');
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   // Update category when URL params change and scroll to products
   useEffect(() => {
@@ -115,6 +117,14 @@ const Shop = () => {
     { id: 'shirts', name: 'Shirts' },
     { id: 'accessories', name: 'Accessories' },
   ];
+
+  const handleWishlistToggle = (product: any) => {
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product);
+    }
+  };
 
   const filteredProducts = useMemo(() => {
     let filtered = products.filter(product => {
@@ -300,15 +310,19 @@ const Shop = () => {
                     {/* Quick Actions */}
                     <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                       <motion.button
-                        className="p-2 bg-white rounded-full shadow-lg hover:bg-neon-green hover:text-white"
+                        className={`p-2 bg-white rounded-full shadow-lg transition-colors ${
+                          isInWishlist(product.id) 
+                            ? 'bg-neon-pink text-white' 
+                            : 'hover:bg-neon-pink hover:text-white'
+                        }`}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={(e) => {
                           e.stopPropagation();
-                          console.log('Added to wishlist:', product.name);
+                          handleWishlistToggle(product);
                         }}
                       >
-                        <Heart className="w-4 h-4" />
+                        <Heart className={`w-4 h-4 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
                       </motion.button>
                       <motion.button
                         className="p-2 bg-white rounded-full shadow-lg hover:bg-electric-indigo hover:text-white"

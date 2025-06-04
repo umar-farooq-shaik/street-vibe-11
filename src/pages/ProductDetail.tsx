@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, ShoppingCart, Star, Minus, Plus, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useWishlist } from '../contexts/WishlistContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -10,7 +11,7 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('M');
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   // Mock product data
   const product = {
@@ -30,15 +31,28 @@ const ProductDetail = () => {
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     colors: ['Black', 'White', 'Gray', 'Navy'],
-    images: ['👕', '👔', '🧥'] // Mock with emojis
+    images: [
+      "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=400&fit=crop&crop=center"
+    ],
+    category: "hoodies"
   };
 
   const relatedProducts = [
-    { id: 2, name: "Casual Tee", price: 29, image: "👕" },
-    { id: 3, name: "Denim Jacket", price: 89, image: "🧥" },
-    { id: 4, name: "Sport Pants", price: 59, image: "👖" },
-    { id: 5, name: "Sneakers", price: 129, image: "👟" },
+    { id: 2, name: "Casual Tee", price: 29, image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop&crop=center", category: "shirts", rating: 4.7, reviews: 89 },
+    { id: 3, name: "Denim Jacket", price: 89, image: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=400&h=400&fit=crop&crop=center", category: "jackets", rating: 4.8, reviews: 156 },
+    { id: 4, name: "Sport Pants", price: 59, image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400&h=400&fit=crop&crop=center", category: "jeans", rating: 4.6, reviews: 98 },
+    { id: 5, name: "Sneakers", price: 129, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop&crop=center", category: "sneakers", rating: 4.9, reviews: 234 },
   ];
+
+  const handleWishlistToggle = () => {
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white-smoke">
@@ -65,8 +79,12 @@ const ProductDetail = () => {
             transition={{ duration: 0.6 }}
           >
             <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <div className="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl flex items-center justify-center mb-4">
-                <span className="text-9xl">{product.images[0]}</span>
+              <div className="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden mb-4">
+                <img 
+                  src={product.images[0]} 
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
               </div>
               
               {/* Thumbnail Images */}
@@ -74,11 +92,15 @@ const ProductDetail = () => {
                 {product.images.map((image, index) => (
                   <motion.div
                     key={index}
-                    className="w-16 h-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-neon-green"
+                    className="w-16 h-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 border-transparent hover:border-neon-green"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <span className="text-2xl">{image}</span>
+                    <img 
+                      src={image} 
+                      alt={`${product.name} ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
                   </motion.div>
                 ))}
               </div>
@@ -177,16 +199,16 @@ const ProductDetail = () => {
                 </motion.button>
                 
                 <motion.button
-                  onClick={() => setIsWishlisted(!isWishlisted)}
+                  onClick={handleWishlistToggle}
                   className={`p-3 rounded-lg border-2 transition-colors ${
-                    isWishlisted
+                    isInWishlist(product.id)
                       ? 'border-neon-pink bg-neon-pink text-white'
                       : 'border-gray-300 text-gray-600 hover:border-neon-pink'
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`} />
+                  <Heart className={`w-5 h-5 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
                 </motion.button>
               </div>
 
@@ -224,8 +246,12 @@ const ProductDetail = () => {
                 transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
                 whileHover={{ y: -5 }}
               >
-                <div className="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-                  <span className="text-4xl">{product.image}</span>
+                <div className="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
                 </div>
                 <div className="p-4">
                   <h3 className="font-medium text-soft-black mb-2 group-hover:text-electric-indigo transition-colors">

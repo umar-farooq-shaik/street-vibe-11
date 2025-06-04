@@ -3,18 +3,28 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Star, Heart, ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useWishlist } from '../contexts/WishlistContext';
 
 const TrendingSection = () => {
   const navigate = useNavigate();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   const trendingProducts = [
-    { id: 1, name: "Urban Streetwear Hoodie", price: 79, originalPrice: 99, rating: 4.8, image: "👕" },
-    { id: 2, name: "Fresh Kicks Sneakers", price: 129, originalPrice: 159, rating: 4.9, image: "👟" },
-    { id: 3, name: "Denim Jacket Classic", price: 99, originalPrice: 129, rating: 4.7, image: "🧥" },
-    { id: 4, name: "Street Style Pants", price: 69, originalPrice: 89, rating: 4.6, image: "👖" },
-    { id: 5, name: "Casual Button Shirt", price: 59, originalPrice: 79, rating: 4.8, image: "👔" },
-    { id: 6, name: "Sport Cap Essential", price: 29, originalPrice: 39, rating: 4.5, image: "🧢" },
+    { id: 1, name: "Urban Streetwear Hoodie", price: 79, originalPrice: 99, rating: 4.8, image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop&crop=center", category: "hoodies", reviews: 124 },
+    { id: 2, name: "Fresh Kicks Sneakers", price: 129, originalPrice: 159, rating: 4.9, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop&crop=center", category: "sneakers", reviews: 89 },
+    { id: 3, name: "Denim Jacket Classic", price: 99, originalPrice: 129, rating: 4.7, image: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=400&h=400&fit=crop&crop=center", category: "jackets", reviews: 156 },
+    { id: 4, name: "Street Style Pants", price: 69, originalPrice: 89, rating: 4.6, image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400&h=400&fit=crop&crop=center", category: "jeans", reviews: 98 },
+    { id: 5, name: "Casual Button Shirt", price: 59, originalPrice: 79, rating: 4.8, image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=400&fit=crop&crop=center", category: "shirts", reviews: 67 },
+    { id: 6, name: "Sport Cap Essential", price: 29, originalPrice: 39, rating: 4.5, image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400&h=400&fit=crop&crop=center", category: "accessories", reviews: 234 },
   ];
+
+  const handleWishlistToggle = (product: any) => {
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product);
+    }
+  };
 
   return (
     <section className="py-20 bg-white">
@@ -47,22 +57,30 @@ const TrendingSection = () => {
               onClick={() => navigate(`/product/${product.id}`)}
             >
               <div className="relative">
-                <div className="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-                  <span className="text-4xl">{product.image}</span>
+                <div className="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
                 </div>
                 
                 {/* Quick Actions */}
                 <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                   <motion.button
-                    className="p-2 bg-white rounded-full shadow-lg hover:bg-neon-green hover:text-white"
+                    className={`p-2 bg-white rounded-full shadow-lg transition-colors ${
+                      isInWishlist(product.id) 
+                        ? 'bg-neon-pink text-white' 
+                        : 'hover:bg-neon-pink hover:text-white'
+                    }`}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      console.log('Added to wishlist:', product.name);
+                      handleWishlistToggle(product);
                     }}
                   >
-                    <Heart className="w-4 h-4" />
+                    <Heart className={`w-4 h-4 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
                   </motion.button>
                   <motion.button
                     className="p-2 bg-white rounded-full shadow-lg hover:bg-electric-indigo hover:text-white"
