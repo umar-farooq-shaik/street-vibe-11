@@ -765,7 +765,7 @@ const Shop = () => {
                 >
                   Clear Filters
                 </motion.button>
-              </div>
+              </motion.div>
             )}
           </div>
         </div>
