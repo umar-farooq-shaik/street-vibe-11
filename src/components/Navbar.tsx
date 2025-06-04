@@ -35,8 +35,8 @@ const Navbar = () => {
     <motion.nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-white/80 backdrop-blur-md shadow-lg' 
-          : 'bg-transparent'
+          ? 'bg-white/90 backdrop-blur-md shadow-lg' 
+          : 'bg-white/20 backdrop-blur-md'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -54,7 +54,7 @@ const Navbar = () => {
             <div className="w-8 h-8 bg-gradient-neon rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">S</span>
             </div>
-            <span className="text-xl font-bold text-soft-black">StreetVibe</span>
+            <span className={`text-xl font-bold ${isScrolled ? 'text-soft-black' : 'text-white'}`}>StreetVibe</span>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -63,13 +63,19 @@ const Navbar = () => {
               <motion.button
                 key={item.name}
                 onClick={() => navigate(item.path)}
-                className="text-soft-black hover:text-electric-indigo font-medium transition-colors relative"
+                className={`font-medium transition-colors relative ${
+                  isScrolled 
+                    ? 'text-soft-black hover:text-electric-indigo' 
+                    : 'text-white hover:text-neon-green'
+                }`}
                 whileHover={{ y: -2 }}
                 transition={{ duration: 0.2 }}
               >
                 {item.name}
                 <motion.div
-                  className="absolute bottom-0 left-0 w-full h-0.5 bg-neon-green origin-left"
+                  className={`absolute bottom-0 left-0 w-full h-0.5 origin-left ${
+                    isScrolled ? 'bg-neon-green' : 'bg-white'
+                  }`}
                   initial={{ scaleX: 0 }}
                   whileHover={{ scaleX: 1 }}
                   transition={{ duration: 0.3 }}
@@ -82,20 +88,24 @@ const Navbar = () => {
           <div className="flex items-center space-x-4">
             <motion.button
               onClick={() => navigate('/shop')}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              className={`p-2 rounded-full transition-colors ${
+                isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/20'
+              }`}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <Search className="w-5 h-5 text-soft-black" />
+              <Search className={`w-5 h-5 ${isScrolled ? 'text-soft-black' : 'text-white'}`} />
             </motion.button>
 
             <motion.button
               onClick={() => navigate('/wishlist')}
-              className="relative p-2 hover:bg-gray-100 rounded-full transition-colors"
+              className={`relative p-2 rounded-full transition-colors ${
+                isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/20'
+              }`}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <Heart className="w-5 h-5 text-soft-black" />
+              <Heart className={`w-5 h-5 ${isScrolled ? 'text-soft-black' : 'text-white'}`} />
               {wishlist.length > 0 && (
                 <motion.span
                   className="absolute -top-1 -right-1 bg-neon-pink text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium"
@@ -110,20 +120,24 @@ const Navbar = () => {
 
             <motion.button
               onClick={() => navigate('/auth')}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              className={`p-2 rounded-full transition-colors ${
+                isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/20'
+              }`}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <User className="w-5 h-5 text-soft-black" />
+              <User className={`w-5 h-5 ${isScrolled ? 'text-soft-black' : 'text-white'}`} />
             </motion.button>
 
             <motion.button
               onClick={() => navigate('/cart')}
-              className="relative p-2 hover:bg-gray-100 rounded-full transition-colors"
+              className={`relative p-2 rounded-full transition-colors ${
+                isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/20'
+              }`}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <ShoppingCart className="w-5 h-5 text-soft-black" />
+              <ShoppingCart className={`w-5 h-5 ${isScrolled ? 'text-soft-black' : 'text-white'}`} />
               {cartCount > 0 && (
                 <motion.span
                   className="absolute -top-1 -right-1 bg-neon-green text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium"
@@ -139,14 +153,16 @@ const Navbar = () => {
             {/* Mobile Menu Button */}
             <motion.button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 hover:bg-gray-100 rounded-full transition-colors"
+              className={`md:hidden p-2 rounded-full transition-colors ${
+                isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/20'
+              }`}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
               {isMobileMenuOpen ? (
-                <X className="w-5 h-5 text-soft-black" />
+                <X className={`w-5 h-5 ${isScrolled ? 'text-soft-black' : 'text-white'}`} />
               ) : (
-                <Menu className="w-5 h-5 text-soft-black" />
+                <Menu className={`w-5 h-5 ${isScrolled ? 'text-soft-black' : 'text-white'}`} />
               )}
             </motion.button>
           </div>
