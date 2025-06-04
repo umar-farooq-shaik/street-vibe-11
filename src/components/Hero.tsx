@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Play } from 'lucide-react';
@@ -8,7 +7,7 @@ const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-dark">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-dark pt-16">
       {/* Background Animation */}
       <div className="absolute inset-0">
         {[...Array(8)].map((_, i) => (
@@ -87,6 +86,7 @@ const Hero = () => {
             </motion.button>
 
             <motion.button
+              onClick={() => navigate('/shop')}
               className="flex items-center gap-2 text-white border border-white/30 px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

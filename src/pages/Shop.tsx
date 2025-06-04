@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, Grid, List, Heart, ShoppingCart } from 'lucide-react';
@@ -14,24 +15,95 @@ const Shop = () => {
   const [sortBy, setSortBy] = useState('newest');
   const [viewMode, setViewMode] = useState('grid');
 
-  // Update category when URL params change
+  // Update category when URL params change and scroll to products
   useEffect(() => {
     const categoryFromUrl = searchParams.get('category');
     if (categoryFromUrl) {
       setSelectedCategory(categoryFromUrl);
+      // Scroll to products section after a short delay
+      setTimeout(() => {
+        const productsSection = document.getElementById('products-section');
+        if (productsSection) {
+          productsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
     }
   }, [searchParams]);
 
-  // Mock products data
+  // Mock products data with real fashion images
   const products = [
-    { id: 1, name: "Urban Streetwear Hoodie", price: 79, category: "hoodies", image: "👕", rating: 4.8, reviews: 124 },
-    { id: 2, name: "Fresh Kicks Sneakers", price: 129, category: "sneakers", image: "👟", rating: 4.9, reviews: 89 },
-    { id: 3, name: "Denim Jacket Classic", price: 99, category: "jackets", image: "🧥", rating: 4.7, reviews: 156 },
-    { id: 4, name: "Street Style Pants", price: 69, category: "jeans", image: "👖", rating: 4.6, reviews: 98 },
-    { id: 5, name: "Casual Button Shirt", price: 59, category: "shirts", image: "👔", rating: 4.8, reviews: 67 },
-    { id: 6, name: "Sport Cap Essential", price: 29, category: "accessories", image: "🧢", rating: 4.5, reviews: 234 },
-    { id: 7, name: "Premium Tech Tee", price: 45, category: "shirts", image: "👕", rating: 4.7, reviews: 123 },
-    { id: 8, name: "Designer Backpack", price: 89, category: "accessories", image: "🎒", rating: 4.9, reviews: 45 },
+    { 
+      id: 1, 
+      name: "Urban Streetwear Hoodie", 
+      price: 79, 
+      category: "hoodies", 
+      image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop&crop=center",
+      rating: 4.8, 
+      reviews: 124 
+    },
+    { 
+      id: 2, 
+      name: "Fresh Kicks Sneakers", 
+      price: 129, 
+      category: "sneakers", 
+      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop&crop=center",
+      rating: 4.9, 
+      reviews: 89 
+    },
+    { 
+      id: 3, 
+      name: "Denim Jacket Classic", 
+      price: 99, 
+      category: "jackets", 
+      image: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=400&h=400&fit=crop&crop=center",
+      rating: 4.7, 
+      reviews: 156 
+    },
+    { 
+      id: 4, 
+      name: "Street Style Pants", 
+      price: 69, 
+      category: "jeans", 
+      image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400&h=400&fit=crop&crop=center",
+      rating: 4.6, 
+      reviews: 98 
+    },
+    { 
+      id: 5, 
+      name: "Casual Button Shirt", 
+      price: 59, 
+      category: "shirts", 
+      image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=400&fit=crop&crop=center",
+      rating: 4.8, 
+      reviews: 67 
+    },
+    { 
+      id: 6, 
+      name: "Sport Cap Essential", 
+      price: 29, 
+      category: "accessories", 
+      image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400&h=400&fit=crop&crop=center",
+      rating: 4.5, 
+      reviews: 234 
+    },
+    { 
+      id: 7, 
+      name: "Premium Tech Tee", 
+      price: 45, 
+      category: "shirts", 
+      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop&crop=center",
+      rating: 4.7, 
+      reviews: 123 
+    },
+    { 
+      id: 8, 
+      name: "Designer Backpack", 
+      price: 89, 
+      category: "accessories", 
+      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop&crop=center",
+      rating: 4.9, 
+      reviews: 45 
+    },
   ];
 
   const categories = [
@@ -90,7 +162,7 @@ const Shop = () => {
         </div>
       </motion.div>
 
-      <div className="container mx-auto px-4 py-8">
+      <div id="products-section" className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Filters Sidebar */}
           <motion.div
@@ -217,8 +289,12 @@ const Shop = () => {
                   onClick={() => navigate(`/product/${product.id}`)}
                 >
                   <div className="relative">
-                    <div className="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-                      <span className="text-6xl">{product.image}</span>
+                    <div className="aspect-square bg-gray-100 overflow-hidden">
+                      <img 
+                        src={product.image} 
+                        alt={product.name}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
                     </div>
                     
                     {/* Quick Actions */}

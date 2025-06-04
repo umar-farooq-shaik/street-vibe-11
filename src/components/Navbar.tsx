@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const Navbar = () => {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [cartCount, setCartCount] = useState(3);
+  const [cartCount, setCartCount] = useState(0); // Changed to 0 initially
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const Navbar = () => {
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Shop', path: '/shop' },
-    { name: 'Categories', path: '/shop' },
+    { name: 'Contact', path: '/contact' }, // Changed from Categories to Contact
     { name: 'Trending', path: '/shop' },
   ];
 
@@ -73,9 +73,10 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Right Section */}
+          {/* Right Section - Swapped order: Search, Wishlist, Profile, Cart */}
           <div className="flex items-center space-x-4">
             <motion.button
+              onClick={() => navigate('/shop')} // Navigate to shop page
               className="p-2 hover:bg-gray-100 rounded-full transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}

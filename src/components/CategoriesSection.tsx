@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Truck, RotateCcw, Headphones, Shield, ArrowRight } from 'lucide-react';
+import { Truck, RotateCcw, Headphones, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const CategoriesSection = () => {
@@ -124,38 +124,6 @@ const CategoriesSection = () => {
                 </motion.div>
               );
             })}
-          </div>
-        </motion.div>
-
-        {/* Newsletter */}
-        <motion.div
-          className="mt-20 bg-gradient-dark rounded-3xl p-8 md:p-12 text-center"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Stay Updated with <span className="text-gradient-neon">Latest Drops</span>
-          </h3>
-          <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-            Be the first to know about new arrivals, exclusive deals, and style tips
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-6 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-neon-green backdrop-blur-md"
-            />
-            <motion.button
-              className="bg-gradient-neon text-white px-6 py-3 rounded-lg font-semibold flex items-center justify-center gap-2"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Subscribe
-              <ArrowRight className="w-4 h-4" />
-            </motion.button>
           </div>
         </motion.div>
       </div>
