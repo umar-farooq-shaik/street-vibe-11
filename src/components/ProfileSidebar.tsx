@@ -80,7 +80,7 @@ const ProfileSidebar = ({ isOpen, onClose, user, onSignOut }: ProfileSidebarProp
 
           {/* User Info */}
           <div className="mb-8 p-4 bg-gradient-to-r from-neon-green/10 to-electric-indigo/10 rounded-lg">
-            <div className="flex items-center gap-4 mb-4">
+            <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-gradient-neon rounded-full flex items-center justify-center">
                 {user?.picture ? (
                   <img
@@ -99,18 +99,6 @@ const ProfileSidebar = ({ isOpen, onClose, user, onSignOut }: ProfileSidebarProp
                 <p className="text-sm text-gray-600">
                   {user?.email || 'guest@example.com'}
                 </p>
-              </div>
-            </div>
-            
-            {/* Display username and email separately for clarity */}
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-600">Username:</span>
-                <span className="text-soft-black font-medium">{user?.name || 'Guest'}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Email:</span>
-                <span className="text-soft-black font-medium">{user?.email || 'N/A'}</span>
               </div>
             </div>
           </div>
