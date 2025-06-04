@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Package, Calendar, CreditCard, X } from 'lucide-react';
@@ -87,10 +86,10 @@ const Orders = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white-smoke">
+    <div className="min-h-screen bg-white-smoke relative">
       <Navbar />
       
-      <div className="container mx-auto px-4 pt-24 pb-16">
+      <div className="container mx-auto px-4 pt-24 pb-16 relative z-10">
         <motion.button
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-gray-600 hover:text-electric-indigo mb-6"
