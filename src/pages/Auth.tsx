@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
@@ -21,11 +20,31 @@ const Auth = () => {
     e.preventDefault();
     console.log(isLogin ? 'Login' : 'Signup', formData);
     // Add authentication logic here
+    // For now, simulate successful authentication
+    navigate('/');
   };
 
   const handleGoogleAuth = () => {
-    console.log('Google authentication');
-    // Add Google authentication logic here
+    console.log('Starting Google authentication...');
+    
+    // Simulate Google OAuth process
+    // In a real implementation, this would redirect to Google OAuth
+    setTimeout(() => {
+      console.log('Google authentication successful');
+      // Simulate creating user profile
+      const userProfile = {
+        id: 'google_' + Date.now(),
+        name: 'John Doe',
+        email: 'john.doe@gmail.com',
+        picture: '/placeholder.svg',
+        provider: 'google'
+      };
+      
+      console.log('User profile created:', userProfile);
+      
+      // Redirect to home page after successful authentication
+      navigate('/');
+    }, 1000);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

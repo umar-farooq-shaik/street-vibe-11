@@ -14,6 +14,8 @@ import OrderConfirmation from './pages/OrderConfirmation';
 import Auth from './pages/Auth';
 import Contact from './pages/Contact';
 import Trending from './pages/Trending';
+import Orders from './pages/Orders';
+import Account from './pages/Account';
 import NotFound from './pages/NotFound';
 import './App.css';
 
@@ -35,6 +37,8 @@ function App() {
                 <Route path="/wishlist" element={<Wishlist />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/order-confirmation" element={<OrderConfirmation />} />
+                <Route path="/orders" element={<Orders />} />
+                <Route path="/account" element={<Account />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="*" element={<NotFound />} />
