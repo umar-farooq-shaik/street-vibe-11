@@ -36,7 +36,8 @@ const ProductDetail = () => {
       "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop&crop=center",
       "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=400&fit=crop&crop=center"
     ],
-    category: "hoodies"
+    category: "hoodies",
+    image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop&crop=center" // Add the required image property
   };
 
   const relatedProducts = [
