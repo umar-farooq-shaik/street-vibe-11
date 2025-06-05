@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Package, Calendar, CreditCard, X } from 'lucide-react';
+import { ArrowLeft, Package, Calendar, CreditCard, X, Truck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -17,51 +18,18 @@ interface Order {
     quantity: number;
     image: string;
   }[];
+  deliveryDate: string;
 }
 
 const Orders = () => {
   const navigate = useNavigate();
-  
-  // Mock orders data - replace with real data from your backend
-  const [orders, setOrders] = useState<Order[]>([
-    {
-      id: 'ORD-001',
-      date: '2024-06-01',
-      status: 'delivered',
-      total: 159.98,
-      items: [
-        {
-          id: '1',
-          name: 'Neon Genesis Hoodie',
-          price: 79.99,
-          quantity: 1,
-          image: '/placeholder.svg'
-        },
-        {
-          id: '2',
-          name: 'Cyber Punk Sneakers',
-          price: 79.99,
-          quantity: 1,
-          image: '/placeholder.svg'
-        }
-      ]
-    },
-    {
-      id: 'ORD-002',
-      date: '2024-06-03',
-      status: 'processing',
-      total: 89.99,
-      items: [
-        {
-          id: '3',
-          name: 'Electric Dreams T-Shirt',
-          price: 89.99,
-          quantity: 1,
-          image: '/placeholder.svg'
-        }
-      ]
-    }
-  ]);
+  const [orders, setOrders] = useState<Order[]>([]);
+
+  // Load orders from localStorage on component mount
+  useEffect(() => {
+    const savedOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+    setOrders(savedOrders);
+  }, []);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -74,15 +42,25 @@ const Orders = () => {
   };
 
   const handleCancelOrder = (orderId: string) => {
-    setOrders(orders.map(order => 
+    const updatedOrders = orders.map(order => 
       order.id === orderId 
         ? { ...order, status: 'cancelled' as const }
         : order
-    ));
+    );
+    setOrders(updatedOrders);
+    localStorage.setItem('orders', JSON.stringify(updatedOrders));
   };
 
   const canCancelOrder = (status: string) => {
     return status === 'processing' || status === 'shipped';
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
   };
 
   return (
@@ -138,16 +116,22 @@ const Orders = () => {
                       <h3 className="text-xl font-semibold text-soft-black mb-2">
                         Order #{order.id}
                       </h3>
-                      <div className="flex items-center gap-4 text-sm text-gray-600">
+                      <div className="flex items-center gap-4 text-sm text-gray-600 mb-2">
                         <div className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
-                          {new Date(order.date).toLocaleDateString()}
+                          Ordered: {formatDate(order.date)}
                         </div>
                         <div className="flex items-center gap-1">
                           <CreditCard className="w-4 h-4" />
                           ${order.total.toFixed(2)}
                         </div>
                       </div>
+                      {order.status !== 'cancelled' && (
+                        <div className="flex items-center gap-1 text-sm text-gray-600">
+                          <Truck className="w-4 h-4" />
+                          Expected delivery: {formatDate(order.deliveryDate)}
+                        </div>
+                      )}
                     </div>
                     
                     <div className="flex items-center gap-3">

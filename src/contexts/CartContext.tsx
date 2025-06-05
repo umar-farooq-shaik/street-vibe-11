@@ -10,6 +10,21 @@ export interface CartItem {
   image: string;
 }
 
+export interface Order {
+  id: string;
+  date: string;
+  status: 'processing' | 'shipped' | 'delivered' | 'cancelled';
+  total: number;
+  items: {
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    image: string;
+  }[];
+  deliveryDate: string;
+}
+
 interface CartContextType {
   cartItems: CartItem[];
   addToCart: (item: Omit<CartItem, 'quantity'> & { quantity?: number }) => void;
@@ -18,6 +33,7 @@ interface CartContextType {
   clearCart: () => void;
   getTotalItems: () => number;
   getTotalPrice: () => number;
+  createOrder: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -71,6 +87,41 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   };
 
+  const createOrder = () => {
+    if (cartItems.length === 0) return;
+
+    const today = new Date();
+    const deliveryDate = new Date();
+    deliveryDate.setDate(today.getDate() + 7);
+
+    const newOrder: Order = {
+      id: 'ORD-' + Date.now(),
+      date: today.toISOString().split('T')[0],
+      status: 'processing',
+      total: getTotalPrice(),
+      items: cartItems.map(item => ({
+        id: item.id.toString(),
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        image: item.image
+      })),
+      deliveryDate: deliveryDate.toISOString().split('T')[0]
+    };
+
+    // Get existing orders from localStorage
+    const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+    const updatedOrders = [newOrder, ...existingOrders];
+    
+    // Save to localStorage
+    localStorage.setItem('orders', JSON.stringify(updatedOrders));
+    
+    // Clear cart after creating order
+    clearCart();
+    
+    console.log('Order created:', newOrder);
+  };
+
   return (
     <CartContext.Provider value={{
       cartItems,
@@ -79,7 +130,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       updateQuantity,
       clearCart,
       getTotalItems,
-      getTotalPrice
+      getTotalPrice,
+      createOrder
     }}>
       {children}
     </CartContext.Provider>
