@@ -2,13 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, Search, User, Heart, Menu, X } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useWishlist } from '../contexts/WishlistContext';
 import { useCart } from '../contexts/CartContext';
 import ProfileSidebar from './ProfileSidebar';
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileSidebarOpen, setIsProfileSidebarOpen] = useState(false);
@@ -18,6 +19,10 @@ const Navbar = () => {
   // Authentication state - get from localStorage
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+
+  // Pages with white backgrounds that need dark text
+  const whiteBackgroundPages = ['/orders', '/account', '/auth', '/contact', '/cart', '/wishlist', '/checkout', '/order-confirmation'];
+  const isOnWhiteBackground = whiteBackgroundPages.includes(location.pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,11 +69,40 @@ const Navbar = () => {
 
   const cartCount = getTotalItems();
 
+  // Determine text color based on page background and scroll state
+  const getTextColor = () => {
+    if (isOnWhiteBackground || isScrolled) {
+      return 'text-soft-black';
+    }
+    return 'text-white';
+  };
+
+  const getHoverTextColor = () => {
+    if (isOnWhiteBackground || isScrolled) {
+      return 'hover:text-electric-indigo';
+    }
+    return 'hover:text-neon-green';
+  };
+
+  const getHoverBgColor = () => {
+    if (isOnWhiteBackground || isScrolled) {
+      return 'hover:bg-gray-100';
+    }
+    return 'hover:bg-white/20';
+  };
+
+  const getUnderlineColor = () => {
+    if (isOnWhiteBackground || isScrolled) {
+      return 'bg-neon-green';
+    }
+    return 'bg-white';
+  };
+
   return (
     <>
       <motion.nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled 
+          isScrolled || isOnWhiteBackground
             ? 'bg-white/95 backdrop-blur-md shadow-lg' 
             : 'bg-white/10 backdrop-blur-md'
         }`}
@@ -88,7 +122,7 @@ const Navbar = () => {
               <div className="w-8 h-8 bg-gradient-neon rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">S</span>
               </div>
-              <span className={`text-xl font-bold ${isScrolled ? 'text-soft-black' : 'text-white'}`}>StreetVibe</span>
+              <span className={`text-xl font-bold ${getTextColor()}`}>StreetVibe</span>
             </motion.div>
 
             {/* Desktop Navigation */}
@@ -97,19 +131,13 @@ const Navbar = () => {
                 <motion.button
                   key={item.name}
                   onClick={() => navigate(item.path)}
-                  className={`font-medium transition-colors relative ${
-                    isScrolled 
-                      ? 'text-soft-black hover:text-electric-indigo' 
-                      : 'text-white hover:text-neon-green'
-                  }`}
+                  className={`font-medium transition-colors relative ${getTextColor()} ${getHoverTextColor()}`}
                   whileHover={{ y: -2 }}
                   transition={{ duration: 0.2 }}
                 >
                   {item.name}
                   <motion.div
-                    className={`absolute bottom-0 left-0 w-full h-0.5 origin-left ${
-                      isScrolled ? 'bg-neon-green' : 'bg-white'
-                    }`}
+                    className={`absolute bottom-0 left-0 w-full h-0.5 origin-left ${getUnderlineColor()}`}
                     initial={{ scaleX: 0 }}
                     whileHover={{ scaleX: 1 }}
                     transition={{ duration: 0.3 }}
@@ -122,24 +150,20 @@ const Navbar = () => {
             <div className="flex items-center space-x-4">
               <motion.button
                 onClick={() => navigate('/shop')}
-                className={`p-2 rounded-full transition-colors ${
-                  isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/20'
-                }`}
+                className={`p-2 rounded-full transition-colors ${getHoverBgColor()}`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <Search className={`w-5 h-5 ${isScrolled ? 'text-soft-black' : 'text-white'}`} />
+                <Search className={`w-5 h-5 ${getTextColor()}`} />
               </motion.button>
 
               <motion.button
                 onClick={() => navigate('/wishlist')}
-                className={`relative p-2 rounded-full transition-colors ${
-                  isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/20'
-                }`}
+                className={`relative p-2 rounded-full transition-colors ${getHoverBgColor()}`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <Heart className={`w-5 h-5 ${isScrolled ? 'text-soft-black' : 'text-white'}`} />
+                <Heart className={`w-5 h-5 ${getTextColor()}`} />
                 {wishlist.length > 0 && (
                   <motion.span
                     className="absolute -top-1 -right-1 bg-neon-pink text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium"
@@ -154,13 +178,11 @@ const Navbar = () => {
 
               <motion.button
                 onClick={() => navigate('/cart')}
-                className={`relative p-2 rounded-full transition-colors ${
-                  isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/20'
-                }`}
+                className={`relative p-2 rounded-full transition-colors ${getHoverBgColor()}`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <ShoppingCart className={`w-5 h-5 ${isScrolled ? 'text-soft-black' : 'text-white'}`} />
+                <ShoppingCart className={`w-5 h-5 ${getTextColor()}`} />
                 {cartCount > 0 && (
                   <motion.span
                     className="absolute -top-1 -right-1 bg-neon-green text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium"
@@ -175,9 +197,7 @@ const Navbar = () => {
 
               <motion.button
                 onClick={handleProfileClick}
-                className={`relative p-2 rounded-full transition-colors ${
-                  isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/20'
-                } ${isAuthenticated ? 'ring-2 ring-neon-green' : ''}`}
+                className={`relative p-2 rounded-full transition-colors ${getHoverBgColor()} ${isAuthenticated ? 'ring-2 ring-neon-green' : ''}`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -188,7 +208,7 @@ const Navbar = () => {
                     className="w-5 h-5 rounded-full"
                   />
                 ) : (
-                  <User className={`w-5 h-5 ${isScrolled ? 'text-soft-black' : 'text-white'}`} />
+                  <User className={`w-5 h-5 ${getTextColor()}`} />
                 )}
                 {isAuthenticated && (
                   <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-neon-green rounded-full border-2 border-white"></div>
@@ -198,16 +218,14 @@ const Navbar = () => {
               {/* Mobile Menu Button */}
               <motion.button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className={`md:hidden p-2 rounded-full transition-colors ${
-                  isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/20'
-                }`}
+                className={`md:hidden p-2 rounded-full transition-colors ${getHoverBgColor()}`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
                 {isMobileMenuOpen ? (
-                  <X className={`w-5 h-5 ${isScrolled ? 'text-soft-black' : 'text-white'}`} />
+                  <X className={`w-5 h-5 ${getTextColor()}`} />
                 ) : (
-                  <Menu className={`w-5 h-5 ${isScrolled ? 'text-soft-black' : 'text-white'}`} />
+                  <Menu className={`w-5 h-5 ${getTextColor()}`} />
                 )}
               </motion.button>
             </div>
