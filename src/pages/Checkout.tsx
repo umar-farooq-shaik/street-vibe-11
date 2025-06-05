@@ -1,9 +1,10 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CreditCard, Truck, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
+import { RadioGroup, RadioGroupItem } from '../components/ui/radio-group';
+import { Label } from '../components/ui/label';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -11,6 +12,7 @@ const Checkout = () => {
   const navigate = useNavigate();
   const { cartItems, getTotalPrice, createOrder } = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('card');
 
   const [formData, setFormData] = useState({
     email: '',
@@ -50,6 +52,29 @@ const Checkout = () => {
     
     // Navigate to order confirmation
     navigate('/order-confirmation');
+  };
+
+  const validateForm = () => {
+    const requiredFields = ['email', 'firstName', 'lastName', 'address', 'city', 'zipCode'];
+    const cardFields = ['cardNumber', 'expiryDate', 'cvv'];
+    
+    // Check required fields
+    for (const field of requiredFields) {
+      if (!formData[field as keyof typeof formData]) {
+        return false;
+      }
+    }
+    
+    // Check card fields only if card payment is selected
+    if (paymentMethod === 'card') {
+      for (const field of cardFields) {
+        if (!formData[field as keyof typeof formData]) {
+          return false;
+        }
+      }
+    }
+    
+    return true;
   };
 
   if (cartItems.length === 0) {
@@ -169,48 +194,88 @@ const Checkout = () => {
                 </div>
               </div>
 
-              {/* Payment Information */}
+              {/* Payment Method Selection */}
               <div>
-                <h3 className="text-lg font-semibold text-soft-black mb-4">Payment Information</h3>
-                <input
-                  type="text"
-                  name="cardNumber"
-                  placeholder="Card number"
-                  value={formData.cardNumber}
-                  onChange={handleInputChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-indigo mb-4"
-                  required
-                />
-                <div className="grid grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    name="expiryDate"
-                    placeholder="MM/YY"
-                    value={formData.expiryDate}
-                    onChange={handleInputChange}
-                    className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-indigo"
-                    required
-                  />
-                  <input
-                    type="text"
-                    name="cvv"
-                    placeholder="CVV"
-                    value={formData.cvv}
-                    onChange={handleInputChange}
-                    className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-indigo"
-                    required
-                  />
-                </div>
+                <h3 className="text-lg font-semibold text-soft-black mb-4">Payment Method</h3>
+                <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod} className="space-y-3">
+                  <div className="flex items-center space-x-2 p-3 border border-gray-200 rounded-lg">
+                    <RadioGroupItem value="card" id="card" />
+                    <Label htmlFor="card" className="flex items-center gap-2 cursor-pointer">
+                      <CreditCard className="w-5 h-5 text-electric-indigo" />
+                      Credit/Debit Card
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2 p-3 border border-gray-200 rounded-lg">
+                    <RadioGroupItem value="cod" id="cod" />
+                    <Label htmlFor="cod" className="flex items-center gap-2 cursor-pointer">
+                      <Truck className="w-5 h-5 text-neon-green" />
+                      Cash on Delivery
+                    </Label>
+                  </div>
+                </RadioGroup>
               </div>
+
+              {/* Payment Information - Only show for card payment */}
+              {paymentMethod === 'card' && (
+                <div>
+                  <h3 className="text-lg font-semibold text-soft-black mb-4">Payment Information</h3>
+                  <input
+                    type="text"
+                    name="cardNumber"
+                    placeholder="Card number"
+                    value={formData.cardNumber}
+                    onChange={handleInputChange}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-indigo mb-4"
+                    required={paymentMethod === 'card'}
+                  />
+                  <div className="grid grid-cols-2 gap-4">
+                    <input
+                      type="text"
+                      name="expiryDate"
+                      placeholder="MM/YY"
+                      value={formData.expiryDate}
+                      onChange={handleInputChange}
+                      className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-indigo"
+                      required={paymentMethod === 'card'}
+                    />
+                    <input
+                      type="text"
+                      name="cvv"
+                      placeholder="CVV"
+                      value={formData.cvv}
+                      onChange={handleInputChange}
+                      className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-electric-indigo"
+                      required={paymentMethod === 'card'}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Cash on Delivery Note */}
+              {paymentMethod === 'cod' && (
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                  <div className="flex items-start gap-3">
+                    <Truck className="w-5 h-5 text-yellow-600 mt-0.5" />
+                    <div>
+                      <h4 className="font-semibold text-yellow-800 mb-1">Cash on Delivery</h4>
+                      <p className="text-sm text-yellow-700">
+                        You will pay ${getTotalPrice().toFixed(2)} in cash when your order is delivered to your address.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <motion.button
                 type="submit"
-                disabled={isProcessing}
+                disabled={isProcessing || !validateForm()}
                 className="w-full bg-gradient-neon text-white py-4 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                 whileHover={{ scale: isProcessing ? 1 : 1.02 }}
                 whileTap={{ scale: isProcessing ? 1 : 0.98 }}
               >
-                {isProcessing ? 'Processing...' : `Pay $${getTotalPrice().toFixed(2)}`}
+                {isProcessing ? 'Processing...' : 
+                 paymentMethod === 'card' ? `Pay $${getTotalPrice().toFixed(2)}` : 
+                 `Place Order - $${getTotalPrice().toFixed(2)}`}
               </motion.button>
             </form>
           </motion.div>
