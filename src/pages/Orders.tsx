@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Package, Calendar, CreditCard, X, Truck } from 'lucide-react';
@@ -25,10 +24,36 @@ const Orders = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState<Order[]>([]);
 
-  // Load orders from localStorage on component mount
+  // Load orders from localStorage on component mount and when the page becomes visible
   useEffect(() => {
-    const savedOrders = JSON.parse(localStorage.getItem('orders') || '[]');
-    setOrders(savedOrders);
+    const loadOrders = () => {
+      const savedOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+      console.log('Loading orders from localStorage:', savedOrders);
+      setOrders(savedOrders);
+    };
+
+    loadOrders();
+
+    // Listen for storage changes (in case orders are updated from another tab)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'orders') {
+        loadOrders();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Also listen for focus events to refresh when returning to the page
+    const handleFocus = () => {
+      loadOrders();
+    };
+    
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('focus', handleFocus);
+    };
   }, []);
 
   const getStatusColor = (status: string) => {
@@ -154,8 +179,8 @@ const Orders = () => {
 
                   {/* Order Items */}
                   <div className="space-y-4">
-                    {order.items.map((item) => (
-                      <div key={item.id} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                    {order.items.map((item, index) => (
+                      <div key={`${item.id}-${index}`} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
                         <img
                           src={item.image}
                           alt={item.name}
