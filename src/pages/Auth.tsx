@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
@@ -61,8 +60,8 @@ const Auth = () => {
       // Create user profile with Google data
       const userProfile = {
         id: 'google_' + Date.now(),
-        name: 'John Doe',
-        email: 'john.doe@gmail.com',
+        name: 'Umar Farooq',
+        email: 'sumarfarooq06@gmail.com',
         picture: '/placeholder.svg',
         provider: 'google',
         createdAt: new Date().toISOString()
