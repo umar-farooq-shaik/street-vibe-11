@@ -1,30 +1,60 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, Package, Calendar, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { Order } from '../contexts/CartContext';
 
 const OrderConfirmation = () => {
   const navigate = useNavigate();
+  const [latestOrder, setLatestOrder] = useState<Order | null>(null);
 
-  // Mock order data
-  const orderData = {
-    orderId: '#SV' + Math.random().toString(36).substr(2, 9).toUpperCase(),
-    total: 247,
-    estimatedDelivery: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    }),
-    items: [
-      { name: 'Urban Streetwear Hoodie', price: 79, quantity: 1, image: '👕' },
-      { name: 'Fresh Kicks Sneakers', price: 129, quantity: 1, image: '👟' },
-      { name: 'Sport Cap Essential', price: 29, quantity: 1, image: '🧢' },
-    ]
-  };
+  useEffect(() => {
+    // Get the latest order from localStorage
+    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+    if (orders.length > 0) {
+      setLatestOrder(orders[0]); // Get the most recent order
+    }
+  }, []);
+
+  // If no order found, show default message
+  if (!latestOrder) {
+    return (
+      <div className="min-h-screen bg-white-smoke">
+        <Navbar />
+        
+        <div className="pt-24 pb-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-2xl mx-auto text-center">
+              <h1 className="text-4xl md:text-5xl font-bold text-soft-black mb-4">
+                No Order Found
+              </h1>
+              <p className="text-xl text-gray-600 mb-8">
+                Please place an order first.
+              </p>
+              <button
+                onClick={() => navigate('/shop')}
+                className="bg-gradient-neon text-white px-8 py-3 rounded-lg font-semibold"
+              >
+                Start Shopping
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <Footer />
+      </div>
+    );
+  }
+
+  const estimatedDelivery = new Date(latestOrder.deliveryDate).toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
 
   return (
     <div className="min-h-screen bg-white-smoke">
@@ -79,13 +109,13 @@ const OrderConfirmation = () => {
                 <div className="text-center">
                   <Package className="w-8 h-8 text-electric-indigo mx-auto mb-2" />
                   <h3 className="font-semibold text-soft-black mb-1">Order Number</h3>
-                  <p className="text-gray-600">{orderData.orderId}</p>
+                  <p className="text-gray-600">{latestOrder.id}</p>
                 </div>
                 
                 <div className="text-center">
                   <Calendar className="w-8 h-8 text-neon-green mx-auto mb-2" />
                   <h3 className="font-semibold text-soft-black mb-1">Estimated Delivery</h3>
-                  <p className="text-gray-600">{orderData.estimatedDelivery}</p>
+                  <p className="text-gray-600">{estimatedDelivery}</p>
                 </div>
                 
                 <div className="text-center">
@@ -93,7 +123,7 @@ const OrderConfirmation = () => {
                     <span className="text-white font-bold">$</span>
                   </div>
                   <h3 className="font-semibold text-soft-black mb-1">Total Amount</h3>
-                  <p className="text-gray-600">${orderData.total}</p>
+                  <p className="text-gray-600">${latestOrder.total}</p>
                 </div>
               </div>
 
@@ -101,11 +131,15 @@ const OrderConfirmation = () => {
               <div className="border-t pt-6">
                 <h3 className="font-semibold text-soft-black mb-4">Order Summary</h3>
                 <div className="space-y-4">
-                  {orderData.items.map((item, index) => (
+                  {latestOrder.items.map((item, index) => (
                     <div key={index} className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                          <span className="text-2xl">{item.image}</span>
+                        <div className="w-12 h-12 bg-gray-100 rounded-lg overflow-hidden">
+                          <img 
+                            src={item.image} 
+                            alt={item.name} 
+                            className="w-full h-full object-cover"
+                          />
                         </div>
                         <div>
                           <h4 className="font-medium text-soft-black">{item.name}</h4>
