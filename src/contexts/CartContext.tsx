@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 export interface CartItem {
@@ -23,6 +22,7 @@ export interface Order {
     image: string;
   }[];
   deliveryDate: string;
+  paymentMethod?: string;
 }
 
 interface CartContextType {
@@ -33,7 +33,7 @@ interface CartContextType {
   clearCart: () => void;
   getTotalItems: () => number;
   getTotalPrice: () => number;
-  createOrder: () => void;
+  createOrder: (paymentMethod?: string) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -87,7 +87,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   };
 
-  const createOrder = () => {
+  const createOrder = (paymentMethod?: string) => {
     if (cartItems.length === 0) return;
 
     const today = new Date();
@@ -106,7 +106,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         quantity: item.quantity,
         image: item.image
       })),
-      deliveryDate: deliveryDate.toISOString().split('T')[0]
+      deliveryDate: deliveryDate.toISOString().split('T')[0],
+      paymentMethod: paymentMethod || 'card'
     };
 
     // Get existing orders from localStorage
