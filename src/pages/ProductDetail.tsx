@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, ShoppingCart, Star, Minus, Plus, ArrowLeft } from 'lucide-react';
@@ -74,10 +75,10 @@ const ProductDetail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white-smoke">
+    <div className="min-h-screen bg-white-smoke relative">
       <Navbar />
       
-      <div className="container mx-auto px-4 pt-24 pb-8">
+      <div className="container mx-auto px-4 pt-24 pb-16 relative z-10">
         {/* Back Button */}
         <motion.button
           onClick={() => navigate(-1)}
