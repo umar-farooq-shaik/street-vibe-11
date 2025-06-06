@@ -33,91 +33,93 @@ const Hero = () => {
         ))}
       </div>
 
-      <div className="relative z-10 w-full text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto px-4"
-        >
-          {/* Main Headline */}
-          <motion.h1
-            className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Level Up Your{' '}
-            <span className="text-gradient-neon">Style</span>
-          </motion.h1>
-
-          {/* Tagline */}
-          <motion.p
-            className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            Discover the freshest streetwear collections designed for the next generation
-          </motion.p>
-
-          {/* CTA Buttons */}
+      <div className="relative z-10 w-full text-center px-4">
+        <div className="container mx-auto">
           <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl mx-auto"
           >
-            <motion.button
-              onClick={() => navigate('/shop')}
-              className="group relative bg-gradient-neon text-white px-8 py-4 rounded-full font-semibold text-lg overflow-hidden"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            {/* Main Headline */}
+            <motion.h1
+              className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <span className="relative z-10 flex items-center gap-2">
-                Shop Now
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </span>
-              <motion.div
-                className="absolute inset-0 bg-white/20"
-                initial={{ x: '-100%' }}
-                whileHover={{ x: '100%' }}
-                transition={{ duration: 0.6 }}
-              />
-            </motion.button>
+              Level Up Your{' '}
+              <span className="text-gradient-neon">Style</span>
+            </motion.h1>
 
-            <motion.button
-              onClick={() => navigate('/shop')}
-              className="flex items-center gap-2 text-white border border-white/30 px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            {/* Tagline */}
+            <motion.p
+              className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <Play className="w-5 h-5" />
-              Watch Collection
-            </motion.button>
-          </motion.div>
+              Discover the freshest streetwear collections designed for the next generation
+            </motion.p>
 
-          {/* Stats */}
-          <motion.div
-            className="flex flex-wrap justify-center gap-8 mt-16 text-white"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            {[
-              { number: '10K+', label: 'Happy Customers' },
-              { number: '500+', label: 'Products' },
-              { number: '50+', label: 'Brands' },
-            ].map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-neon-green">
-                  {stat.number}
+            {/* CTA Buttons */}
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              <motion.button
+                onClick={() => navigate('/shop')}
+                className="group relative bg-gradient-neon text-white px-8 py-4 rounded-full font-semibold text-lg overflow-hidden"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  Shop Now
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </span>
+                <motion.div
+                  className="absolute inset-0 bg-white/20"
+                  initial={{ x: '-100%' }}
+                  whileHover={{ x: '100%' }}
+                  transition={{ duration: 0.6 }}
+                />
+              </motion.button>
+
+              <motion.button
+                onClick={() => navigate('/shop')}
+                className="flex items-center gap-2 text-white border border-white/30 px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Play className="w-5 h-5" />
+                Watch Collection
+              </motion.button>
+            </motion.div>
+
+            {/* Stats */}
+            <motion.div
+              className="flex flex-wrap justify-center gap-8 mt-16 text-white"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            >
+              {[
+                { number: '10K+', label: 'Happy Customers' },
+                { number: '500+', label: 'Products' },
+                { number: '50+', label: 'Brands' },
+              ].map((stat, index) => (
+                <div key={index} className="text-center">
+                  <div className="text-2xl md:text-3xl font-bold text-neon-green">
+                    {stat.number}
+                  </div>
+                  <div className="text-gray-400">{stat.label}</div>
                 </div>
-                <div className="text-gray-400">{stat.label}</div>
-              </div>
-            ))}
+              ))}
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Scroll Indicator */}
