@@ -11,7 +11,7 @@ import { RadioGroup, RadioGroupItem } from '../components/ui/radio-group';
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const { cartItems, getCartTotal, clearCart } = useCart();
+  const { cartItems, calculateTotal, clearCart } = useCart();
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [formData, setFormData] = useState({
     name: '',
@@ -55,7 +55,7 @@ const Checkout = () => {
               ))}
               <div className="flex items-center justify-between py-2 font-semibold">
                 <span>Total:</span>
-                <span>${getCartTotal()}</span>
+                <span>${calculateTotal()}</span>
               </div>
             </div>
 
