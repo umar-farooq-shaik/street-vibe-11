@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
@@ -10,7 +11,7 @@ import { RadioGroup, RadioGroupItem } from '../components/ui/radio-group';
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const { items, total, clearCart } = useCart();
+  const { cartItems, getCartTotal, clearCart } = useCart();
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [formData, setFormData] = useState({
     name: '',
@@ -39,14 +40,14 @@ const Checkout = () => {
       <Navbar />
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-semibold mb-4">Checkout</h1>
-        {items.length === 0 ? (
+        {cartItems.length === 0 ? (
           <p>Your cart is empty.</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Order Summary */}
             <div>
               <h2 className="text-lg font-semibold mb-2">Order Summary</h2>
-              {items.map((item) => (
+              {cartItems.map((item) => (
                 <div key={item.id} className="flex items-center justify-between py-2 border-b">
                   <span>{item.name} ({item.quantity})</span>
                   <span>${item.price * item.quantity}</span>
@@ -54,7 +55,7 @@ const Checkout = () => {
               ))}
               <div className="flex items-center justify-between py-2 font-semibold">
                 <span>Total:</span>
-                <span>${total}</span>
+                <span>${getCartTotal()}</span>
               </div>
             </div>
 
