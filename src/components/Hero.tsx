@@ -8,9 +8,9 @@ const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-dark pt-16">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-dark pt-16 w-full">
       {/* Background Animation */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 w-full">
         {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
@@ -33,8 +33,8 @@ const Hero = () => {
         ))}
       </div>
 
-      <div className="relative z-10 w-full text-center px-4">
-        <div className="container mx-auto">
+      <div className="relative z-10 w-full text-center">
+        <div className="w-full px-4">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
