@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Play } from 'lucide-react';
@@ -8,7 +7,7 @@ const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-screen w-screen flex items-center justify-center overflow-hidden bg-gradient-dark -mx-4 -mt-16">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-dark pt-16">
       {/* Background Animation */}
       <div className="absolute inset-0">
         {[...Array(8)].map((_, i) => (
@@ -33,7 +32,7 @@ const Hero = () => {
         ))}
       </div>
 
-      <div className="relative z-10 text-center px-4">
+      <div className="relative z-10 container mx-auto px-4 text-center">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
