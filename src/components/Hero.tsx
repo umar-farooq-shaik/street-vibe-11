@@ -14,7 +14,7 @@ const Hero = () => {
         {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-32 h-32 bg-neon-green/20 rounded-full blur-3xl"
+            className="absolute w-16 h-16 md:w-32 md:h-32 bg-neon-green/20 rounded-full blur-3xl"
             animate={{
               x: [0, 100, 0],
               y: [0, -100, 0],
@@ -33,16 +33,16 @@ const Hero = () => {
         ))}
       </div>
 
-      <div className="relative z-10 w-full text-center">
+      <div className="relative z-10 w-full text-center px-4">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="w-full px-4"
+          className="w-full"
         >
           {/* Main Headline */}
           <motion.h1
-            className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-4 md:mb-6 leading-tight"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -53,7 +53,7 @@ const Hero = () => {
 
           {/* Tagline */}
           <motion.p
-            className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed"
+            className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-6 md:mb-8 leading-relaxed max-w-4xl mx-auto px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -63,20 +63,20 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             <motion.button
               onClick={() => navigate('/shop')}
-              className="group relative bg-gradient-neon text-white px-8 py-4 rounded-full font-semibold text-lg overflow-hidden"
+              className="group relative bg-gradient-neon text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg overflow-hidden w-full sm:w-auto"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className="relative z-10 flex items-center gap-2">
+              <span className="relative z-10 flex items-center justify-center gap-2">
                 Shop Now
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </span>
               <motion.div
                 className="absolute inset-0 bg-white/20"
@@ -88,18 +88,18 @@ const Hero = () => {
 
             <motion.button
               onClick={() => navigate('/shop')}
-              className="flex items-center gap-2 text-white border border-white/30 px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-colors"
+              className="flex items-center justify-center gap-2 text-white border border-white/30 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-white/10 transition-colors w-full sm:w-auto"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Play className="w-5 h-5" />
+              <Play className="w-4 h-4 sm:w-5 sm:h-5" />
               Watch Collection
             </motion.button>
           </motion.div>
 
           {/* Stats */}
           <motion.div
-            className="flex flex-wrap justify-center gap-8 mt-16 text-white"
+            className="flex flex-wrap justify-center gap-6 sm:gap-8 mt-12 sm:mt-16 text-white px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
@@ -110,10 +110,10 @@ const Hero = () => {
               { number: '50+', label: 'Brands' },
             ].map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-neon-green">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-neon-green">
                   {stat.number}
                 </div>
-                <div className="text-gray-400">{stat.label}</div>
+                <div className="text-gray-400 text-sm sm:text-base">{stat.label}</div>
               </div>
             ))}
           </motion.div>
@@ -122,12 +122,12 @@ const Hero = () => {
 
       {/* Scroll Indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2"
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-white rounded-full mt-2"></div>
+        <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/30 rounded-full flex justify-center">
+          <div className="w-1 h-2 sm:h-3 bg-white rounded-full mt-2"></div>
         </div>
       </motion.div>
     </section>

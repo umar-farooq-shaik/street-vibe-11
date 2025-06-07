@@ -118,28 +118,28 @@ const ProductDetail = () => {
       <div className="pt-20">
         {/* Breadcrumb */}
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center space-x-2 text-sm text-gray-600">
+          <div className="flex flex-wrap items-center space-x-2 text-sm text-gray-600">
             <button onClick={() => navigate('/')} className="hover:text-electric-indigo">Home</button>
             <span>/</span>
             <button onClick={() => navigate('/shop')} className="hover:text-electric-indigo">Shop</button>
             <span>/</span>
             <span className="text-soft-black capitalize">{product.category}</span>
             <span>/</span>
-            <span className="text-soft-black">{product.name}</span>
+            <span className="text-soft-black truncate">{product.name}</span>
           </div>
         </div>
 
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-4 sm:py-8">
           <motion.button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-gray-600 hover:text-electric-indigo mb-8"
+            className="flex items-center gap-2 text-gray-600 hover:text-electric-indigo mb-6 sm:mb-8"
             whileHover={{ x: -5 }}
           >
             <ArrowLeft className="w-4 h-4" />
             Back
           </motion.button>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Product Images */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -147,7 +147,7 @@ const ProductDetail = () => {
               transition={{ duration: 0.6 }}
             >
               <div className="space-y-4">
-                <div className="aspect-square bg-gray-100 rounded-2xl overflow-hidden">
+                <div className="aspect-square bg-gray-100 rounded-lg sm:rounded-2xl overflow-hidden">
                   <img 
                     src={product.images[activeImageIndex]} 
                     alt={product.name}
@@ -155,7 +155,7 @@ const ProductDetail = () => {
                   />
                 </div>
                 
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-3 gap-2 sm:gap-4">
                   {product.images.map((image, index) => (
                     <motion.button
                       key={index}
@@ -178,48 +178,48 @@ const ProductDetail = () => {
 
             {/* Product Info */}
             <motion.div
-              className="space-y-6"
+              className="space-y-4 sm:space-y-6"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <div>
-                <h1 className="text-3xl md:text-4xl font-bold text-soft-black mb-4">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-soft-black mb-4">
                   {product.name}
                 </h1>
                 
-                <div className="flex items-center gap-4 mb-4">
+                <div className="flex flex-wrap items-center gap-4 mb-4">
                   <div className="flex items-center gap-1">
                     {[...Array(5)].map((_, i) => (
                       <Star 
                         key={i} 
-                        className={`w-5 h-5 ${i < Math.floor(product.rating) ? 'text-cyber-yellow fill-current' : 'text-gray-300'}`} 
+                        className={`w-4 h-4 sm:w-5 sm:h-5 ${i < Math.floor(product.rating) ? 'text-cyber-yellow fill-current' : 'text-gray-300'}`} 
                       />
                     ))}
-                    <span className="text-gray-600 ml-2">({product.reviews} reviews)</span>
+                    <span className="text-gray-600 ml-2 text-sm sm:text-base">({product.reviews} reviews)</span>
                   </div>
                 </div>
                 
-                <div className="text-3xl font-bold text-soft-black mb-6">
+                <div className="text-2xl sm:text-3xl font-bold text-soft-black mb-4 sm:mb-6">
                   ${product.price}
                 </div>
               </div>
 
               <div className="space-y-4">
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
                   {product.description}
                 </p>
               </div>
 
               {/* Size Selection */}
               <div>
-                <h3 className="text-lg font-semibold text-soft-black mb-3">Size</h3>
-                <div className="flex flex-wrap gap-3">
+                <h3 className="text-base sm:text-lg font-semibold text-soft-black mb-3">Size</h3>
+                <div className="flex flex-wrap gap-2 sm:gap-3">
                   {product.sizes.map((size) => (
                     <motion.button
                       key={size}
                       onClick={() => setSelectedSize(size)}
-                      className={`px-4 py-2 border-2 rounded-lg font-medium ${
+                      className={`px-3 py-2 sm:px-4 sm:py-2 border-2 rounded-lg font-medium text-sm sm:text-base ${
                         selectedSize === size
                           ? 'border-neon-green bg-neon-green text-white'
                           : 'border-gray-300 text-gray-700 hover:border-neon-green'
@@ -235,13 +235,13 @@ const ProductDetail = () => {
 
               {/* Color Selection */}
               <div>
-                <h3 className="text-lg font-semibold text-soft-black mb-3">Color</h3>
-                <div className="flex flex-wrap gap-3">
+                <h3 className="text-base sm:text-lg font-semibold text-soft-black mb-3">Color</h3>
+                <div className="flex flex-wrap gap-2 sm:gap-3">
                   {product.colors.map((color) => (
                     <motion.button
                       key={color}
                       onClick={() => setSelectedColor(color)}
-                      className={`px-4 py-2 border-2 rounded-lg font-medium ${
+                      className={`px-3 py-2 sm:px-4 sm:py-2 border-2 rounded-lg font-medium text-sm sm:text-base ${
                         selectedColor === color
                           ? 'border-neon-green bg-neon-green text-white'
                           : 'border-gray-300 text-gray-700 hover:border-neon-green'
@@ -257,7 +257,7 @@ const ProductDetail = () => {
 
               {/* Quantity */}
               <div>
-                <h3 className="text-lg font-semibold text-soft-black mb-3">Quantity</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-soft-black mb-3">Quantity</h3>
                 <div className="flex items-center gap-4">
                   <div className="flex items-center border border-gray-300 rounded-lg">
                     <button
@@ -274,28 +274,28 @@ const ProductDetail = () => {
                       +
                     </button>
                   </div>
-                  <span className="text-gray-600">
+                  <span className="text-gray-600 text-sm sm:text-base">
                     {product.inStock ? 'In Stock' : 'Out of Stock'}
                   </span>
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 <motion.button
                   onClick={handleAddToCart}
                   disabled={!product.inStock}
-                  className="w-full bg-gradient-neon text-white py-4 rounded-lg font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-gradient-neon text-white py-3 sm:py-4 rounded-lg font-semibold text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                   whileHover={{ scale: product.inStock ? 1.02 : 1 }}
                   whileTap={{ scale: product.inStock ? 0.98 : 1 }}
                 >
-                  <ShoppingCart className="w-5 h-5 inline mr-2" />
+                  <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 inline mr-2" />
                   Add to Cart
                 </motion.button>
                 
                 <motion.button
                   onClick={handleWishlistToggle}
-                  className={`w-full py-4 rounded-lg font-semibold text-lg border-2 ${
+                  className={`w-full py-3 sm:py-4 rounded-lg font-semibold text-base sm:text-lg border-2 ${
                     isInWishlist(product.id)
                       ? 'border-neon-pink bg-neon-pink text-white'
                       : 'border-neon-pink text-neon-pink hover:bg-neon-pink hover:text-white'
@@ -303,18 +303,18 @@ const ProductDetail = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <Heart className={`w-5 h-5 inline mr-2 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
+                  <Heart className={`w-4 h-4 sm:w-5 sm:h-5 inline mr-2 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
                   {isInWishlist(product.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
                 </motion.button>
               </div>
 
               {/* Features */}
               <div>
-                <h3 className="text-lg font-semibold text-soft-black mb-3">Features</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-soft-black mb-3">Features</h3>
                 <ul className="space-y-2">
                   {product.features.map((feature, index) => (
-                    <li key={index} className="flex items-center gap-2 text-gray-600">
-                      <span className="w-2 h-2 bg-neon-green rounded-full"></span>
+                    <li key={index} className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
+                      <span className="w-2 h-2 bg-neon-green rounded-full flex-shrink-0"></span>
                       {feature}
                     </li>
                   ))}
@@ -322,17 +322,17 @@ const ProductDetail = () => {
               </div>
 
               {/* Shipping Info */}
-              <div className="border-t pt-6 space-y-4">
-                <div className="flex items-center gap-3 text-gray-600">
-                  <Truck className="w-5 h-5" />
+              <div className="border-t pt-4 sm:pt-6 space-y-3 sm:space-y-4">
+                <div className="flex items-center gap-3 text-gray-600 text-sm sm:text-base">
+                  <Truck className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                   <span>Free shipping on orders over $100</span>
                 </div>
-                <div className="flex items-center gap-3 text-gray-600">
-                  <Shield className="w-5 h-5" />
+                <div className="flex items-center gap-3 text-gray-600 text-sm sm:text-base">
+                  <Shield className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                   <span>1 year warranty included</span>
                 </div>
-                <div className="flex items-center gap-3 text-gray-600">
-                  <RotateCcw className="w-5 h-5" />
+                <div className="flex items-center gap-3 text-gray-600 text-sm sm:text-base">
+                  <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                   <span>30-day return policy</span>
                 </div>
               </div>
