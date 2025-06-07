@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, Search, User, Heart, Menu, X } from 'lucide-react';
@@ -22,7 +21,8 @@ const Navbar = () => {
 
   // Pages with white backgrounds that need dark text
   const whiteBackgroundPages = ['/orders', '/account', '/auth', '/contact', '/cart', '/wishlist', '/checkout', '/order-confirmation'];
-  const isOnWhiteBackground = whiteBackgroundPages.includes(location.pathname);
+  // Check if current path is a product detail page or in the white background pages list
+  const isOnWhiteBackground = whiteBackgroundPages.includes(location.pathname) || location.pathname.startsWith('/product/');
 
   useEffect(() => {
     const handleScroll = () => {
