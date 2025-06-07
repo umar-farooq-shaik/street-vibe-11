@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -30,7 +29,7 @@ const ProductDetail = () => {
       images: [
         "https://images.unsplash.com/photo-1520975954732-35dd22299614?w=800&h=800&fit=crop&crop=center",
         "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&h=800&fit=crop&crop=center",
-        "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=800&h=800&fit=crop&crop=center"
+        "https://images.unsplash.com/photo-1618677603286-0ec56cb6e1b5?w=800&h=800&fit=crop&crop=center"
       ],
       rating: 4.9,
       reviews: 312,
@@ -103,8 +102,7 @@ const ProductDetail = () => {
       price: product.price,
       image: product.images[0],
       quantity: quantity,
-      size: selectedSize,
-      color: selectedColor
+      size: selectedSize
     });
     
     toast({
